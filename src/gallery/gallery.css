@@ -1,0 +1,30 @@
+/* Estilos propios de la galería (no forman parte de la librería). */
+.gallery {
+  max-width: 1120px;
+  margin: 0 auto;
+}
+.gallery-section {
+  display: grid;
+  gap: 16px;
+}
+.gallery-title {
+  font-size: 14px;
+  font-weight: 600;
+  margin: 0;
+}
+.gallery-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 12px;
+}
+.gallery-stack {
+  display: grid;
+  gap: 8px;
+  align-content: start;
+}
+.gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 300px), 1fr));
+  gap: 16px;
+}

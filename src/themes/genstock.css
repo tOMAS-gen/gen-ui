@@ -1,0 +1,13 @@
+/* Marca genstock — verde. Importar DESPUÉS de `@gen/ui/styles.css`.
+ * El verde es claro: el texto sobre la marca es oscuro en ambos temas. */
+:root {
+  --accent: #13e28e;
+  --accent-text: #0a7d4f;
+  --on-accent: #0c0c0c;
+}
+
+[data-theme="dark"] {
+  --accent: #13e28e;
+  --accent-text: #13e28e;
+  --on-accent: var(--bg);
+}

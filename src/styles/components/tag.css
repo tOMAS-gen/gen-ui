@@ -1,0 +1,198 @@
+/* gen-ui — tag (origen: genwork globals.css) */
+
+.tag {
+  display: inline-block;
+  border-radius: var(--radius-sm);
+  padding: 0 6px;
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.tag-work {
+  color: var(--tag-work);
+  background: var(--tag-work-bg);
+}
+
+.tag-exec {
+  color: var(--tag-exec);
+  background: var(--tag-exec-bg);
+}
+
+.tag-ref {
+  color: var(--tag-ref);
+  background: var(--tag-ref-bg);
+}
+
+.tag-user {
+  color: var(--tag-user);
+  background: var(--tag-user-bg);
+}
+
+.tag-label {
+  color: var(--tag-label);
+  background: var(--tag-label-bg);
+}
+
+/* ---- Stage badges (feature 012) ---- */
+.stage-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  border-radius: var(--radius-sm);
+  padding: 2px 10px;
+  font-size: 12px;
+  font-weight: 500;
+  white-space: nowrap;
+  border: 1.5px solid currentColor;
+}
+
+.stage-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+/* ---- Etiquetas de proyecto (feature 005) ---- */
+.label-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  border-radius: var(--radius-sm);
+  padding: 1px 10px;
+  font-size: 12px;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+/* ---- Render unificado por hex (feature 033) — usan --c inline ---- */
+.color-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  border-radius: var(--radius-sm);
+  padding: 1px 10px;
+  font-size: 12px;
+  font-weight: 500;
+  white-space: nowrap;
+  background: color-mix(in srgb, var(--c) 14%, var(--surface));
+  color: color-mix(in srgb, var(--c) 80%, var(--text));
+}
+
+.color-dot {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  background: var(--c);
+}
+
+.color-bar {
+  border-left: 3px solid var(--c);
+}
+
+.color-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  border-radius: var(--radius-full);
+  padding: 2px 10px;
+  font-size: 12px;
+  font-weight: 500;
+  white-space: nowrap;
+  border: 1.5px solid currentColor;
+  color: var(--c);
+}
+
+/* Pills de estado */
+.status-pill {
+  display: inline-flex;
+  align-items: center;
+  padding: 2px 10px;
+  border-radius: var(--radius-sm);
+  font-size: var(--text-xs);
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+/* Tonos genéricos. Los alias por estado (pending/in_progress/completed) se
+   conservan porque genwork los usa tal cual desde la base de datos. */
+.status-neutral,
+.status-pending {
+  background: var(--hover-soft);
+  color: var(--muted);
+}
+
+.status-warning,
+.status-in_progress {
+  background: var(--color-warning-bg);
+  color: var(--color-warning-text);
+}
+
+.status-success,
+.status-completed {
+  background: var(--color-success-bg);
+  color: var(--color-success-text);
+}
+
+/* ── Badge numérico reutilizable (feature 054) ────────────────────────────────
+   Contador pill para el drawer y otras superficies que exponen "cantidad".
+   Reglas: se oculta cuando count === 0 (el propio componente devuelve null);
+   número compactado a "999+" para volúmenes altos.
+   Basado en .design-system/components.md:72-75 (pill radius, sizes sm/lg). */
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2px 6px;
+  /* Círculo/píldora reservado a avatar, badge numérico o progreso
+     (GENSTOCK_PARITY.md) — .badge es justamente el badge numérico reusable
+     (Badge.tsx), así que la píldora acá es la forma correcta, no la excepción. */
+  border-radius: 9999px;
+  font-size: var(--text-xs);
+  font-weight: 500;
+  line-height: 1;
+  background: var(--hover-soft, var(--surface));
+  color: var(--muted);
+  border: 1px solid var(--border);
+  min-width: 18px;
+  white-space: nowrap;
+  user-select: none;
+}
+
+.badge-sm {
+  font-size: 11px;
+  padding: 1px 5px;
+  min-width: 16px;
+}
+
+.badge-inline-end {
+  margin-left: auto;
+}
+
+.status-danger {
+  background: var(--color-danger-bg);
+  color: var(--color-danger-text);
+}
+
+.status-info {
+  background: var(--color-info-bg);
+  color: var(--color-info-text);
+}
+
+.status-accent {
+  background: var(--accent-soft);
+  color: var(--accent-text);
+}
+
+/* Punto de estado dentro de la pill (p. ej. "● En línea"). */
+.status-pill-dot {
+  width: 6px;
+  height: 6px;
+  margin-right: 6px;
+  border-radius: 50%;
+  background: currentColor;
+  flex-shrink: 0;
+}

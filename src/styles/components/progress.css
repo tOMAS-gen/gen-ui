@@ -1,0 +1,148 @@
+/* gen-ui — progress (origen: genwork globals.css) */
+
+/* Barra de progreso de proyecto (FR-407) */
+.progress-bar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.progress-track {
+  flex: 1;
+  height: 6px;
+  background: var(--border);
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.progress-bar-sm .progress-track {
+  height: 4px;
+}
+
+.progress-fill {
+  height: 100%;
+  background: var(--accent);
+  border-radius: 999px;
+  transition: width 200ms ease;
+}
+
+.progress-label {
+  font-size: 12px;
+  color: var(--muted);
+  white-space: nowrap;
+}
+
+.progress-bar-sm .progress-label {
+  font-size: 11px;
+}
+
+/* Círculo de progreso (ProgressRing) */
+.progress-ring {
+  position: relative;
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+}
+
+.progress-ring-svg {
+  position: absolute;
+  inset: 0;
+  transform: rotate(-90deg);
+}
+
+.progress-ring-track {
+  fill: none;
+  stroke: var(--border);
+}
+
+.progress-ring-fill {
+  fill: none;
+  stroke: var(--accent);
+  stroke-linecap: round;
+  transition: stroke-dashoffset 200ms ease;
+}
+
+.progress-ring-ok .progress-ring-fill {
+  stroke: var(--ok);
+}
+
+.progress-ring-danger .progress-ring-track {
+  stroke: var(--danger);
+}
+
+.progress-ring-center {
+  position: relative;
+  display: inline-flex;
+  font-size: 10px;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  color: var(--text);
+}
+
+.progress-ring-ok .progress-ring-center {
+  color: var(--ok);
+}
+
+.progress-ring-danger .progress-ring-center {
+  color: var(--danger);
+}
+
+.btn-primary .progress-ring-track {
+  stroke: rgb(255 255 255 / 0.35);
+}
+
+.btn-primary .progress-ring-fill {
+  stroke: currentColor;
+}
+
+/* Barra de estado del proyecto */
+.status-bar {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  flex-wrap: wrap;
+  font-size: var(--text-sm);
+  color: var(--muted);
+  margin: var(--space-3) 0;
+}
+
+.status-bar .status-progress-track {
+  width: 80px;
+  height: 6px;
+  background: var(--border);
+  border-radius: 999px;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.status-bar .status-progress-fill {
+  height: 100%;
+  background: var(--accent);
+  border-radius: 999px;
+  transition: width 200ms ease;
+}
+
+.status-bar .status-separator {
+  width: 1px;
+  height: 16px;
+  background: var(--border);
+  flex-shrink: 0;
+}
+
+.status-bar .status-due {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+}
+
+/* Tonos de ProgressBar */
+.progress-ok .progress-fill {
+  background: var(--ok);
+}
+.progress-warning .progress-fill {
+  background: var(--color-warning);
+}
+.progress-danger .progress-fill {
+  background: var(--danger);
+}

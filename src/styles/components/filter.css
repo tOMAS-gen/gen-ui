@@ -1,0 +1,201 @@
+/* gen-ui — filter (origen: genwork globals.css) */
+
+/* Filtros como pills: el <select> nativo se conserva, estilado como chip */
+.filter-pills {
+  display: flex;
+  gap: var(--space-2);
+  margin: 10px 0;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.filter-pill {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 0 30px 0 12px;
+  height: 34px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-control);
+  background: var(--surface);
+  color: var(--muted);
+  cursor: pointer;
+  transition: border-color 0.15s ease, background 0.15s ease, color 0.15s ease;
+}
+
+/* Variante toggle: pill que es un <button> por sí mismo (p. ej. filtro por
+   grupo, multi-select) en vez de <label> + <select> invisible — sin flecha. */
+.filter-pill-toggle {
+  padding: 0 12px;
+  font: inherit;
+  font-size: var(--text-sm);
+}
+
+.filter-pill-toggle::after {
+  content: none;
+}
+
+.filter-pill::after {
+  content: "";
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  width: 8px;
+  height: 8px;
+  border-right: 1.5px solid currentColor;
+  border-bottom: 1.5px solid currentColor;
+  transform: translateY(-65%) rotate(45deg);
+  opacity: 0.6;
+  pointer-events: none;
+}
+
+.filter-pill:hover {
+  border-color: var(--accent);
+}
+
+.filter-pill.is-active {
+  background: var(--accent-soft);
+  border-color: var(--accent);
+  color: var(--accent-text);
+}
+
+/* El texto visible es el <span class="filter-pill-label"> de al lado — un
+   <select> nativo no respeta text-overflow: ellipsis de forma confiable en
+   Chromium, así que el select queda como capa invisible que solo maneja el
+   click/teclado, cubriendo todo el pill. */
+.filter-pill select {
+  appearance: none;
+  -webkit-appearance: none;
+  position: absolute;
+  inset: 0;
+  border: none;
+  background: transparent;
+  padding: 0;
+  margin: 0;
+  font: inherit;
+  font-size: var(--text-sm);
+  color: transparent;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.filter-pill select:focus-visible {
+  outline: none;
+}
+
+.filter-pill:has(select:focus-visible) {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.filter-pill-label {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 180px;
+}
+
+.filter-pill-dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 3px;
+  flex-shrink: 0;
+}
+
+.filter-clear {
+  border: none;
+  background: transparent;
+  padding: 4px 6px;
+  font: inherit;
+  font-size: var(--text-sm);
+  color: var(--muted);
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.filter-clear:hover {
+  color: var(--text);
+}
+
+/* Toolbar: búsqueda, filtros opcionales, orden, vista y selecciones visibles. */
+.toolbar { min-width: 0; border: 1px solid var(--border); border-radius: 8px; background: var(--surface); }
+.toolbar-main { display: flex; align-items: center; gap: 8px; padding: 12px; }
+.search-input { display: flex; align-items: center; flex: 1; min-width: 160px; gap: 8px; padding: 0 10px; height: 40px; background: var(--field); border: 1px solid var(--outline); border-radius: 6px; color: var(--muted); }
+.search-input > svg { flex-shrink: 0; }
+.search-input:focus-within { border-color: var(--accent); }
+.search-input input { min-width: 0; height: 100%; padding: 0; border: 0; border-radius: 0; background: transparent; font-size: 13px; }
+.search-input input:focus { outline: none; box-shadow: none; }
+.search-input input::-webkit-search-cancel-button { appearance: none; }
+.search-input-clear { display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0; width: 28px; height: 28px; background: transparent; border: 0; border-radius: 4px; color: var(--muted); }
+.search-input-clear:hover { color: var(--text); background: var(--hover-soft); }
+.toolbar-filter-trigger { display: inline-flex; align-items: center; justify-content: center; gap: 7px; min-height: 40px; padding: 0 12px; border: 1px solid var(--outline); border-radius: 6px; background: transparent; color: var(--text); font-size: 13px; font-weight: 600; white-space: nowrap; }
+.toolbar-filter-trigger:hover { background: var(--hover-soft); }
+.toolbar-filter-trigger[aria-expanded="true"] { background: var(--accent-soft); border-color: var(--accent); color: var(--accent-text); }
+.toolbar-filter-count { display: inline-flex; align-items: center; justify-content: center; min-width: 18px; height: 18px; padding: 0 4px; border-radius: 4px; background: var(--accent-soft); color: var(--accent-text); font-size: 11px; font-variant-numeric: tabular-nums; }
+.toolbar-sort { display: flex; align-items: center; min-width: 0; height: 40px; padding: 0 10px; gap: 6px; border-left: 1px solid var(--border); color: var(--muted); }
+.toolbar-sort > svg { pointer-events: none; flex-shrink: 0; }
+.toolbar-sort-label { font-size: 12px; }
+.toolbar-sort select { appearance: none; min-width: 0; width: 128px; height: 36px; border: 0; background: transparent; padding: 0 2px; font-size: 13px; font-weight: 500; cursor: pointer; }
+.toolbar-sort select:focus-visible { outline-offset: 0; }
+.view-switch { display: inline-flex; flex-shrink: 0; padding: 3px; gap: 2px; border: 1px solid var(--outline); border-radius: 6px; background: var(--field); }
+.view-switch button { display: inline-flex; align-items: center; justify-content: center; width: 32px; height: 32px; border: 0; border-radius: 4px; background: transparent; color: var(--muted); }
+.view-switch button:hover { color: var(--text); }
+.view-switch button[aria-pressed="true"] { color: var(--accent-text); background: var(--accent-soft); }
+.toolbar-filter-panel { padding: 16px; border-top: 1px solid var(--border); background: var(--field); }
+.toolbar-filter-panel[hidden] { display: none; }
+.toolbar-filter-fields { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+.toolbar-filter-field { display: grid; min-width: 0; gap: 6px; }
+.toolbar-filter-field > span, .toolbar-filter-groups legend { font-size: 12px; font-weight: 600; color: var(--text); }
+.toolbar-filter-field select { min-width: 0; height: 40px; font-size: 13px; background: var(--surface); }
+.toolbar-filter-groups { min-width: 0; margin: 16px 0 0; padding: 0; border: 0; }
+.toolbar-filter-groups legend { padding: 0; margin-bottom: 8px; }
+.toolbar-filter-groups legend span { margin-left: 8px; font-size: 11px; font-weight: 400; color: var(--muted); }
+.toolbar-filter-groups > div { display: flex; flex-wrap: wrap; gap: 8px 24px; max-height: 168px; overflow-y: auto; }
+.toolbar-filter-groups label { display: inline-flex; align-items: center; gap: 8px; min-height: 32px; max-width: 100%; cursor: pointer; font-size: 13px; color: var(--muted); }
+.toolbar-filter-groups label:has(:checked) { color: var(--text); }
+.toolbar-filter-groups label span { overflow-wrap: anywhere; min-width: 0; }
+.toolbar-filter-groups input { width: 16px; height: 16px; flex-shrink: 0; margin: 0; accent-color: var(--accent); }
+.toolbar-summary { display: flex; align-items: center; flex-wrap: wrap; gap: 8px 12px; min-height: 40px; padding: 8px 12px; border-top: 1px solid var(--border); }
+.toolbar-count { flex-shrink: 0; font-size: 12px; color: var(--muted); font-variant-numeric: tabular-nums; }
+.toolbar-chips { display: flex; flex: 1; flex-wrap: wrap; gap: 6px; min-width: 0; }
+.toolbar-chips button { display: inline-flex; align-items: center; gap: 6px; min-width: 0; max-width: 100%; padding: 3px 6px 3px 8px; border: 1px solid var(--border); border-radius: 4px; background: var(--field); color: var(--text); font-size: 11px; }
+.toolbar-chips button span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.toolbar-chips button svg { flex-shrink: 0; color: var(--muted); }
+.toolbar-chips button:hover { border-color: var(--accent); }
+.toolbar-reset { margin-left: auto; padding: 4px 0; border: 0; background: transparent; color: var(--muted); font-size: 12px; }
+.toolbar-reset:hover { color: var(--accent-text); text-decoration: underline; }
+@media (max-width: 1100px) { .toolbar-sort-label { display: none; } }
+@media (max-width: 900px) {
+  .toolbar-main { display: grid; grid-template-columns: auto minmax(0, 1fr) auto; }
+  .search-input { grid-column: 1 / -1; min-width: 0; }
+  .toolbar-sort { padding: 0 4px; border: 0; }
+  .toolbar-sort select { width: 100%; }
+}
+@media (max-width: 540px) {
+  .toolbar-main { padding: 8px; gap: 8px 6px; }
+  .toolbar-filter-trigger { padding: 0 8px; gap: 5px; }
+  .toolbar-sort > svg:first-child { display: none; }
+  .view-switch button { width: 28px; }
+  .toolbar-filter-panel { padding: 12px; }
+  .toolbar-filter-fields { grid-template-columns: 1fr; gap: 12px; }
+  .toolbar-summary { padding: 8px; }
+  .toolbar-chips { flex-basis: 100%; order: 1; }
+}
+@media (pointer: coarse) {
+  .search-input, .toolbar-filter-trigger, .toolbar-sort { min-height: 44px; }
+  .toolbar-filter-field select { height: 44px; }
+  .toolbar-filter-groups label { min-height: 44px; }
+  .toolbar-chips button, .toolbar-reset { min-height: 36px; }
+}
+
+.toolbar-summary-actions {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px 16px;
+  margin-left: auto;
+}
+.toolbar-summary-actions .toolbar-reset {
+  margin-left: 0;
+}

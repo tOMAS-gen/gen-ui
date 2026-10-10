@@ -1,0 +1,13 @@
+/* Marca genwork — azul. Importar DESPUÉS de `@gen/ui/styles.css`. */
+:root {
+  --accent: #3b5bfa;
+  --accent-text: #3b5bfa;
+  --on-accent: #ffffff;
+}
+
+[data-theme="dark"] {
+  --accent: #5b7fff;
+  --accent-text: #5b7fff;
+  /* Blanco sobre #5b7fff da 3.54:1 (falla AA): texto oscuro sobre la marca. */
+  --on-accent: var(--bg);
+}

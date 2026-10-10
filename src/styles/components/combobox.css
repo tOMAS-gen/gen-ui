@@ -1,0 +1,87 @@
+/* gen-ui — combobox (origen: genwork globals.css) */
+
+/* ---- Combobox: input + lista de resultados (origen: buscador de miembros, feature 037) ---- */
+.combobox {
+  position: relative;
+}
+
+.combobox-input {
+  margin-bottom: 0;
+}
+
+.combobox-dropdown {
+  position: absolute;
+  top: calc(100% + 6px);
+  left: 0;
+  right: 0;
+  z-index: var(--z-dropdown);
+  max-height: 240px;
+  overflow-y: auto;
+  background: var(--floating);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-lg);
+  padding: 6px;
+}
+
+.combobox-item {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  padding: 8px 10px;
+  border-radius: 7px;
+  cursor: pointer;
+  transition: background 150ms ease;
+}
+
+.combobox-item:hover,
+.combobox-item.active {
+  background: var(--accent-soft);
+}
+
+.combobox-item-name {
+  font-size: 14px;
+  color: var(--text);
+}
+
+.combobox-item-email {
+  font-size: 12px;
+}
+
+.combobox-empty {
+  padding: 10px;
+  font-size: 13px;
+  color: var(--muted);
+}
+
+.combobox-loading {
+  padding: 10px;
+  font-size: 13px;
+  color: var(--muted);
+}
+
+.combobox-selected {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 8px 10px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  background: var(--surface);
+}
+
+.combobox-selected-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.combobox-selected-info strong {
+  font-size: 14px;
+}
+
+.combobox-selected-info span {
+  font-size: 12px;
+}

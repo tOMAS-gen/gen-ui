@@ -1,0 +1,68 @@
+/* gen-ui — theme-toggle (origen: genwork globals.css) */
+
+/* ---- Selector de tema (menú desplegable) ---- */
+.theme-menu-trigger {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: 8px 10px;
+  border: none;
+  background: transparent;
+  border-radius: 6px;
+  color: var(--muted);
+  cursor: pointer;
+  font-size: var(--text-sm);
+  width: 100%;
+  transition: background 150ms ease, color 150ms ease;
+}
+
+.theme-menu-trigger:hover {
+  color: var(--text);
+  background: var(--hover-soft);
+}
+
+.theme-menu-trigger-mini {
+  justify-content: center;
+  padding: 0;
+  width: 40px;
+  height: 40px;
+  margin: 0 auto;
+}
+
+.theme-menu-dropdown {
+  position: absolute;
+  bottom: calc(100% + 4px);
+  left: 0;
+  min-width: 140px;
+  background: var(--floating);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 4px;
+  box-shadow: var(--shadow-lg);
+  z-index: 100;
+}
+
+.theme-menu-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  padding: 6px 10px;
+  border: none;
+  background: transparent;
+  border-radius: 6px;
+  color: var(--muted);
+  font-size: 13px;
+  cursor: pointer;
+  transition: background 150ms ease, color 150ms ease;
+}
+
+.theme-menu-item:hover {
+  color: var(--text);
+  background: var(--hover-soft);
+}
+
+.theme-menu-item.active {
+  color: var(--accent-text);
+  background: var(--accent-soft);
+}

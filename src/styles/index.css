@@ -1,0 +1,28 @@
+/* gen-ui — hoja completa. Importar una vez en la raíz de la app, seguida del
+ * tema de la marca:
+ *   import "@gen/ui/styles.css";
+ *   import "@gen/ui/themes/gensaas.css";
+ */
+@import "./tokens.css";
+@import "./base.css";
+@import "./components/button.css";
+@import "./components/form.css";
+@import "./components/card.css";
+@import "./components/tag.css";
+@import "./components/alert.css";
+@import "./components/dialog.css";
+@import "./components/menu.css";
+@import "./components/toast.css";
+@import "./components/feedback.css";
+@import "./components/progress.css";
+@import "./components/tabs.css";
+@import "./components/pagination.css";
+@import "./components/table.css";
+@import "./components/filter.css";
+@import "./components/stats.css";
+@import "./components/combobox.css";
+@import "./components/color-picker.css";
+@import "./components/layout.css";
+@import "./components/shell.css";
+@import "./components/theme-toggle.css";
+@import "./components/auth.css";

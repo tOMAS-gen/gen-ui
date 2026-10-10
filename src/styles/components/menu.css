@@ -1,0 +1,67 @@
+/* gen-ui — menu (origen: genwork globals.css) */
+
+/* ---- Menú contextual (⋮) ---- */
+.menu-wrap {
+  position: relative;
+  display: inline-block;
+}
+/* T012: variante "botón primario" del menú (ej. Nuevo proyecto / Desde plantilla) */
+.menu-wrap.btn.btn-primary {
+  padding: 0;
+  border: none;
+}
+.menu-wrap.btn.btn-primary > .icon-btn {
+  width: auto;
+  height: auto;
+  padding: 8px 12px;
+  border: 1px solid var(--accent);
+  background: var(--accent);
+  color: var(--on-accent);
+  border-radius: var(--radius-control);
+}
+.menu-wrap.btn.btn-primary > .icon-btn:hover {
+  filter: brightness(1.08);
+  background: var(--accent);
+  color: var(--on-accent);
+}
+.menu-pop {
+  position: absolute;
+  right: 0;
+  top: calc(100% + 4px);
+  z-index: var(--z-popover-portal);
+  min-width: 260px;
+  background: var(--floating);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  box-shadow: var(--shadow-lg);
+  padding: 6px;
+}
+.menu-item {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  width: 100%;
+  padding: 9px 10px;
+  border: none;
+  background: transparent;
+  border-radius: 7px;
+  color: var(--text);
+  text-align: left;
+  transition: background 150ms ease;
+}
+.menu-item:hover {
+  background: var(--accent-soft);
+}
+.menu-item.danger {
+  color: var(--danger);
+}
+.menu-item.danger:hover {
+  background: var(--danger-soft);
+}
+.menu-item:disabled {
+  color: var(--muted);
+  cursor: not-allowed;
+}
+.menu-item:disabled:hover {
+  background: transparent;
+}

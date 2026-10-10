@@ -1,0 +1,41 @@
+/* Marca gen saas — rojo ›gen (Pantone P 45-8 C / P 48-7 C).
+ * Importar DESPUÉS de `@gen/ui/styles.css`.
+ *
+ * Como la marca es roja, el peligro se corre a carmesí y además se distingue
+ * por forma (botón danger con borde, avisos de error siempre con ícono). */
+:root {
+  --accent: #e52713; /* blanco encima: 4.53:1 */
+  --accent-text: #c8200e; /* 5.25:1 sobre --bg */
+  --on-accent: #ffffff;
+
+  --danger: #b4123c;
+  --danger-soft: #fff1f3;
+  --color-danger: #e11d48;
+  --color-danger-bg: #fff1f2;
+  --color-danger-text: #9f1239;
+}
+
+[data-theme="dark"] {
+  --accent: #ff3939; /* 5.49:1 sobre #0c0c0c */
+  --accent-text: #ff3939;
+  --on-accent: var(--bg);
+
+  --danger: #fb7185;
+  --danger-soft: #3a1520;
+  --color-danger: #fb7185;
+  --color-danger-bg: rgba(251, 113, 133, 0.1);
+  --color-danger-text: #fda4af;
+}
+
+/* La marca ya es roja: "peligro" se distingue por forma (borde, sin relleno). */
+.btn-danger {
+  background: transparent;
+  border-color: var(--danger);
+  color: var(--danger);
+}
+
+.btn-danger:hover {
+  background: var(--danger-soft);
+  border-color: var(--danger);
+  color: var(--danger);
+}

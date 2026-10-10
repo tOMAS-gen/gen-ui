@@ -1,0 +1,314 @@
+/* gen-ui — color-picker (origen: genwork globals.css) */
+
+/* ---- ColorPicker unificado (feature 033) ---- */
+.color-picker {
+  display: grid;
+  gap: var(--space-sm);
+  width: 100%;
+  max-width: 336px;
+}
+
+.color-picker-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: calc(var(--space-xs) * -1);
+}
+
+.color-picker-title {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text);
+}
+
+.color-picker-footer {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: var(--space-xs);
+}
+
+.color-picker-done {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+/* Área de saturación/brillo: gradiente blanco→transparente (sat, horizontal)
+   sobre negro→transparente (brillo, vertical) sobre el hue de fondo. */
+.color-picker-sv {
+  position: relative;
+  width: 100%;
+  height: 150px;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border);
+  cursor: crosshair;
+  touch-action: none;
+  background-color: var(--sv-hue);
+  background-image:
+    linear-gradient(to top, #000, transparent),
+    linear-gradient(to right, #fff, transparent);
+}
+
+.color-picker-sv-thumb {
+  position: absolute;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  border: 2px solid #fff;
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.35), var(--shadow-sm);
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+}
+
+/* Slider de hue: rainbow horizontal */
+.color-picker-hue {
+  position: relative;
+  width: 100%;
+  height: 14px;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  cursor: pointer;
+  touch-action: none;
+  background: linear-gradient(
+    to right,
+    #ff0000 0%,
+    #ffff00 17%,
+    #00ff00 33%,
+    #00ffff 50%,
+    #0000ff 67%,
+    #ff00ff 83%,
+    #ff0000 100%
+  );
+}
+
+.color-picker-hue-thumb {
+  position: absolute;
+  top: 50%;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  border: 2px solid #fff;
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.35), var(--shadow-sm);
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+}
+
+/* Fila: preview + hex + opacidad (fija 100%, FR-011) */
+.color-picker-row {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+}
+
+.color-picker-preview {
+  flex: none;
+  width: 32px;
+  height: 32px;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border);
+}
+
+.color-picker-hex-field {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 6px 10px;
+  background: var(--surface);
+  transition: border-color 150ms ease;
+}
+
+.color-picker-hex-field:focus-within {
+  border-color: var(--accent);
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+  box-shadow: none;
+}
+
+.color-picker-hex-prefix {
+  color: var(--muted);
+  font-size: var(--text-sm);
+  font-family: ui-monospace, monospace;
+}
+
+.color-picker-hex-input {
+  flex: 1;
+  min-width: 0;
+  border: none;
+  padding: 0;
+  background: transparent;
+  font-family: ui-monospace, monospace;
+  font-size: var(--text-sm);
+  color: var(--text);
+  text-transform: lowercase;
+}
+
+.color-picker-hex-input:focus {
+  outline: none;
+  box-shadow: none;
+  border: none;
+}
+
+.color-picker-opacity {
+  flex: none;
+  padding: 6px 10px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  font-size: var(--text-sm);
+  color: var(--muted);
+  background: var(--hover-soft);
+}
+
+/* Toggle "Personalizado": despliega el área SB + hue (modo compacto) */
+.color-picker-advanced-toggle {
+  flex: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 10px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  background: var(--surface);
+  color: var(--muted);
+  font: inherit;
+  font-size: var(--text-sm);
+  cursor: pointer;
+  white-space: nowrap;
+  transition: border-color 0.15s ease, color 0.15s ease, background 0.15s ease;
+}
+
+.color-picker-advanced-toggle:hover {
+  border-color: var(--accent);
+  color: var(--accent-text);
+}
+
+.color-picker-advanced-toggle.is-open {
+  border-color: var(--accent);
+  color: var(--accent-text);
+  background: var(--accent-soft);
+}
+
+/* Swatches preestablecidos */
+.color-picker-swatches {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-sm);
+}
+
+.color-picker-swatch {
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  border: 1px solid rgba(15, 23, 42, 0.12);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  cursor: pointer;
+  transition:
+    transform 120ms ease,
+    box-shadow 120ms ease;
+}
+
+.color-picker-swatch:hover {
+  transform: scale(1.08);
+}
+
+.color-picker-swatch-selected {
+  box-shadow: 0 0 0 2px var(--surface), 0 0 0 4px var(--accent);
+}
+
+.color-picker-swatch-check {
+  color: #fff;
+  filter: drop-shadow(0 0 1px rgba(0, 0, 0, 0.6));
+}
+
+.color-picker-swatch-none {
+  background: var(--surface);
+  color: var(--muted);
+  border-style: dashed;
+}
+
+/* ── ColorField: disparador + popover del ColorPicker ────────────────── */
+.color-field {
+  position: relative;
+  display: inline-block;
+}
+
+.color-field-trigger {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2px;
+  border: none;
+  border-radius: 50%;
+  background: transparent;
+  cursor: pointer;
+  transition: transform 0.12s ease;
+}
+/* Área táctil real de 44x44 sin agrandar el círculo de color visible. */
+.color-field-trigger::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 44px;
+  height: 44px;
+  transform: translate(-50%, -50%);
+}
+
+.color-field-trigger:hover {
+  transform: scale(1.06);
+}
+
+.color-field-trigger:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+/* Circulito de color de entidad: mismo tamaño y estilo
+   en todos lados. Relleno si hay color, contorno si no (sin damero ni texto). */
+.entity-color-dot {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  border: 1px solid rgba(0, 0, 0, 0.18);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.06);
+  flex-shrink: 0;
+}
+
+.entity-color-dot-empty {
+  background: transparent;
+  border: 2px solid var(--muted);
+  box-shadow: none;
+}
+
+.color-field-popover {
+  position: absolute;
+  top: calc(100% + 6px);
+  z-index: 100;
+  padding: var(--space-md);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-lg, var(--shadow-md));
+}
+
+.color-field-popover-start {
+  left: 0;
+}
+
+.color-field-popover-end {
+  right: 0;
+}
+
+@media (max-width: 480px) {
+  .color-field-popover {
+    left: 0;
+    right: auto;
+  }
+}

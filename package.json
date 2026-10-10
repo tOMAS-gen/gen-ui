@@ -1,0 +1,62 @@
+{
+  "name": "@gen/ui",
+  "version": "0.1.0",
+  "description": "Componentes y estilos compartidos de las plataformas ›gen (genwork, gen saas, licencia…). Misma UI, cambia sólo la marca.",
+  "license": "UNLICENSED",
+  "private": false,
+  "type": "module",
+  "sideEffects": [
+    "*.css"
+  ],
+  "main": "./src/index.ts",
+  "types": "./src/index.ts",
+  "exports": {
+    ".": "./src/index.ts",
+    "./icons": "./src/components/icons.tsx",
+    "./styles.css": "./src/styles/index.css",
+    "./themes/*": "./src/themes/*",
+    "./tailwind-preset": {
+      "types": "./tailwind-preset.d.cts",
+      "default": "./tailwind-preset.cjs"
+    },
+    "./package.json": "./package.json",
+    "./gallery": "./src/gallery/Gallery.tsx",
+    "./gallery.css": "./src/gallery/gallery.css"
+  },
+  "files": [
+    "src",
+    "tailwind-preset.cjs",
+    "README.md",
+    "NOMENCLATURA.md",
+    "DESIGN.md",
+    "tailwind-preset.d.cts"
+  ],
+  "scripts": {
+    "dev": "vite --config playground/vite.config.ts",
+    "build:playground": "vite build --config playground/vite.config.ts",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "pack": "npm pack"
+  },
+  "peerDependencies": {
+    "react": ">=19",
+    "react-dom": ">=19"
+  },
+  "devDependencies": {
+    "@testing-library/react": "^16.3.0",
+    "@types/node": "^22.20.5",
+    "@types/react": "^19.1.0",
+    "@types/react-dom": "^19.1.0",
+    "@vitejs/plugin-react": "^5.0.0",
+    "jsdom": "^26.1.0",
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0",
+    "typescript": "^5.8.0",
+    "vite": "^7.0.0",
+    "vitest": "^3.1.0"
+  },
+  "allowScripts": {
+    "esbuild": true,
+    "fsevents": true
+  }
+}

@@ -1,0 +1,90 @@
+/* gen-ui — dialog (origen: genwork globals.css) */
+
+/* ---- Diálogo nativo <dialog> ---- */
+dialog.dialog {
+  background: var(--floating);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 0;
+  max-width: 480px;
+  width: 92%;
+  box-shadow: var(--shadow-lg);
+  color: var(--text);
+  animation: dialog-content-in 180ms ease forwards;
+}
+dialog.dialog::backdrop {
+  background: var(--scrim);
+  animation: dialog-overlay-in 180ms ease forwards;
+}
+
+/* Permite que un popover interno (ej. un selector) se desborde visualmente del
+   rectángulo del diálogo en vez de recortarse por el overflow default del <dialog>. */
+dialog.dialog--overflow-visible {
+  overflow: visible;
+}
+
+/* ---- Fade-in genérico de modales/dialogs (feature 008, T025) ---- */
+.dialog-overlay {
+  animation: dialog-overlay-in 180ms ease forwards;
+}
+
+.dialog-content {
+  animation: dialog-content-in 180ms ease forwards;
+}
+
+@keyframes dialog-overlay-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes dialog-content-in {
+  from {
+    opacity: 0;
+    transform: scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+.dialog-body {
+  padding: var(--space-md);
+  display: grid;
+  gap: var(--space-md);
+}
+.dialog-title {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 600;
+}
+.dialog-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--space-sm);
+  margin-top: var(--space-sm);
+}
+.dialog-field {
+  display: grid;
+  gap: 6px;
+}
+.dialog-field label {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--muted);
+}
+
+.dialog-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-2);
+}
+.dialog-description {
+  margin: calc(var(--space-2) * -1) 0 0;
+  font-size: 13px;
+  color: var(--muted);
+}

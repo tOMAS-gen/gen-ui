@@ -1,0 +1,79 @@
+/* gen-ui — card (origen: genwork globals.css) */
+
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 16px;
+}
+
+/* Grilla de cards */
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 320px), 1fr));
+  gap: var(--space-4);
+}
+
+/* Card clickeable (con .card-link estirado) */
+.card-interactive {
+  color: var(--text);
+  position: relative;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: var(--space-4);
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  min-width: 0;
+  transition: border-color 150ms ease;
+}
+
+/* Link "estirado": cubre toda la card (patrón stretched-link) sin anidar un
+   <a> alrededor de los botones propios (favorito, menú). */
+.card-link {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  border-radius: inherit;
+}
+
+/* Los controles propios de la card quedan por encima del link estirado. */
+.card-actions {
+  position: relative;
+  z-index: 1;
+}
+
+/* Sin lift ni sombra en hover (DESIGN.md): sólo cambio de borde. */
+.card-interactive:hover {
+  border-color: var(--accent);
+}
+
+/* Bajo 375px el min-width:340px de la card fuerza scroll horizontal (el grid
+   ya colapsa a 1 columna, pero la card exigía un ancho mayor al del viewport). */
+@media (max-width: 420px) {
+  .card-grid {
+    grid-template-columns: 1fr;
+  }
+  .card-interactive {
+    min-width: 0;
+  }
+}
+
+.card-interactive .card-header {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  justify-content: space-between;
+  min-width: 0;
+}
+
+.card-interactive:focus-within {
+  border-color: var(--accent);
+}
+
+.card-link:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
