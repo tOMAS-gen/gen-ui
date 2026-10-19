@@ -1,54 +1,54 @@
-import { StrictMode, useEffect, useState } from "react";
+import { StrictMode, useEffect, useLayoutEffect, useState } from "react";
 import { createRoot } from "react-dom/client";
 import "../../src/styles/index.css";
 import "../../src/gallery/gallery.css";
-import genwork from "../../src/themes/genwork.css?inline";
-import gensaas from "../../src/themes/gensaas.css?inline";
-import genstock from "../../src/themes/genstock.css?inline";
-import { GenUIProvider, SegmentedControl, ToastProvider } from "../../src";
+import "../../src/themes/ui.css";
+import { GenUIProvider, ToastProvider } from "../../src";
 import { Gallery } from "../../src/gallery/Gallery";
-
-const BRANDS = { genwork, gensaas, genstock } as const;
-type Brand = keyof typeof BRANDS;
-
-/** Inyecta la hoja de la marca elegida (en producción se importa una sola). */
-function useBrand(brand: Brand) {
-  useEffect(() => {
-    let el = document.getElementById("brand-theme") as HTMLStyleElement | null;
-    if (!el) {
-      el = document.createElement("style");
-      el.id = "brand-theme";
-      document.head.appendChild(el);
-    }
-    el.textContent = BRANDS[brand];
-  }, [brand]);
-}
+import { Catalog } from "./Catalog";
+import { examplePlatforms, readLocation } from "./catalog-data";
+import { ExamplesApp } from "./examples/ExamplesApp";
 
 function App() {
-  const initial = (new URLSearchParams(location.search).get("brand") as Brand) || "gensaas";
-  const [brand, setBrand] = useState<Brand>(initial in BRANDS ? initial : "gensaas");
-  useBrand(brand);
+  const [route, setRoute] = useState(readLocation);
+  useLayoutEffect(() => {
+    document.documentElement.dataset.theme = route.theme;
+  }, [route.theme]);
+  useEffect(() => {
+    const onPopState = () => setRoute(readLocation());
+    window.addEventListener("popstate", onPopState);
+    return () => window.removeEventListener("popstate", onPopState);
+  }, []);
+  function navigate(changes: Partial<typeof route>) {
+    const next = { ...route, ...changes };
+    const platform = examplePlatforms[next.page];
+    if (platform) next.platform = platform;
+    const query = new URLSearchParams({
+      screen: next.page,
+      platform: next.platform,
+      theme: next.theme,
+    });
+    history.pushState(null, "", `${location.pathname}?${query}`);
+    setRoute(next);
+  }
   return (
     <GenUIProvider storagePrefix="gen-ui:">
       <ToastProvider>
-        <div style={{ padding: 16 }}>
-          <div style={{ display: "flex", justifyContent: "center", marginBottom: 16 }}>
-            <SegmentedControl
-              ariaLabel="Marca"
-              value={brand}
-              onChange={(b) => {
-                setBrand(b);
-                history.replaceState(null, "", `?brand=${b}`);
-              }}
-              options={[
-                { value: "genwork", label: "genwork" },
-                { value: "gensaas", label: "gen saas" },
-                { value: "genstock", label: "genstock" },
-              ]}
+        {route.preview ? (
+          route.page === "components" ? (
+            <div style={{ padding: 16 }}>
+              <Gallery showThemeToggle={false} />
+            </div>
+          ) : (
+            <ExamplesApp
+              key={route.page}
+              initialScreen={route.page}
+              product="ui"
             />
-          </div>
-          <Gallery heading={`Componentes · ${brand}`} />
-        </div>
+          )
+        ) : (
+          <Catalog route={route} onRoute={navigate} />
+        )}
       </ToastProvider>
     </GenUIProvider>
   );

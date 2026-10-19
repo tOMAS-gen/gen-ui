@@ -10,7 +10,9 @@ import {
   useState,
   type ComponentType,
   type ReactNode,
+  type RefObject,
 } from "react";
+import { createPortal } from "react-dom";
 import { cx } from "../lib/cx";
 import { Avatar } from "./Alert";
 import { BrandLogo } from "./BrandLogo";
@@ -21,7 +23,7 @@ import { ThemeToggle } from "./Theme";
 const MIN_W = 240;
 const MAX_W = 400;
 const DEFAULT_W = 240;
-const MINI_W = 48;
+const MINI_W = 57; // 8px de margen + 40px de fila + 8px + 1px de borde.
 const MOBILE_QUERY = "(max-width: 767px)";
 
 const MobileDrawerContext = createContext<() => void>(() => {});
@@ -53,7 +55,7 @@ function useIsMobile() {
 
 /**
  * Estructura de la app: barra superior de 40px (48 en mobile), menú lateral
- * redimensionable (240–400px) que colapsa a un rail de íconos de 48px, y en
+ * redimensionable (240–400px) que colapsa a un rail de íconos de 57px, y en
  * mobile un drawer con foco atrapado. Ancho y colapso se recuerdan en
  * localStorage con el prefijo del `GenUIProvider`.
  */
@@ -158,19 +160,25 @@ export function AppShell({
   const asideWidth = mini ? MINI_W : width;
   const asideRef = useRef<HTMLElement>(null);
 
+  useEffect(() => {
+    if (!isMobile) setMobileOpen(false);
+  }, [isMobile]);
+
   // Foco atrapado + Escape mientras el drawer mobile está abierto (hallazgo
   // Crítico de accesibilidad: sin esto, Tab se escapa al contenido de atrás
   // y no hay forma de cerrar por teclado).
   useEffect(() => {
-    if (!mobileOpen) return;
+    if (!mobileOpen || !isMobile) return;
     const aside = asideRef.current;
     if (!aside) return;
-    const focusable = aside.querySelectorAll<HTMLElement>(
-      'a[href], button:not([disabled]), input, select, textarea, [tabindex]:not([tabindex="-1"])',
-    );
-    const first = focusable[0];
-    const last = focusable[focusable.length - 1];
-    first?.focus();
+    // El contenido puede cambiar al filtrar o navegar. Sólo participan los
+    // controles visibles y habilitados en el momento de pulsar Tab.
+    const getFocusable = () => Array.from(aside.querySelectorAll<HTMLElement>(
+      'a[href], button, input, select, textarea, [tabindex]',
+    )).filter((node) => node.tabIndex >= 0 && !node.matches(':disabled') && node.getClientRects().length > 0);
+    getFocusable()[0]?.focus();
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
 
     const onKeyDown = (e: KeyboardEvent) => {
       if (e.key === "Escape") {
@@ -178,7 +186,19 @@ export function AppShell({
         closeMobile();
         return;
       }
-      if (e.key !== "Tab" || focusable.length === 0) return;
+      if (e.key !== "Tab") return;
+      const focusable = getFocusable();
+      const first = focusable[0];
+      const last = focusable[focusable.length - 1];
+      if (!first || !last) {
+        e.preventDefault();
+        return;
+      }
+      if (!focusable.includes(document.activeElement as HTMLElement)) {
+        e.preventDefault();
+        (e.shiftKey ? last : first).focus();
+        return;
+      }
       if (e.shiftKey && document.activeElement === first) {
         e.preventDefault();
         last?.focus();
@@ -188,8 +208,11 @@ export function AppShell({
       }
     };
     document.addEventListener("keydown", onKeyDown);
-    return () => document.removeEventListener("keydown", onKeyDown);
-  }, [mobileOpen, closeMobile]);
+    return () => {
+      document.removeEventListener("keydown", onKeyDown);
+      document.body.style.overflow = previousOverflow;
+    };
+  }, [mobileOpen, isMobile, closeMobile]);
 
   return (
     <MobileDrawerContext.Provider value={closeMobile}>
@@ -217,6 +240,7 @@ export function AppShell({
           />
           <aside
             ref={asideRef}
+            inert={isMobile && !mobileOpen}
             className={`sidebar ${mini ? "mini" : ""} ${mobileOpen ? "mobile-open" : ""}`}
             style={{ width: asideWidth }}
             role={isMobile && mobileOpen ? "dialog" : undefined}
@@ -259,11 +283,53 @@ export function AppShell({
               />
             )}
           </aside>
-          <main className="main">{children}</main>
+          <main className="main" inert={isMobile && mobileOpen}>{children}</main>
         </div>
+        {mini && <RailTooltip rootRef={asideRef} />}
       </DrawerMiniContext.Provider>
     </MobileDrawerContext.Provider>
   );
+}
+
+/** Tooltip del rail compartido, adaptado del panel de referencia. */
+function RailTooltip({ rootRef }: { rootRef: RefObject<HTMLElement | null> }) {
+  const [tip, setTip] = useState<{ label: string; top: number; left: number } | null>(null);
+  useEffect(() => {
+    const root = rootRef.current;
+    if (!root) return;
+    const show = (event: Event) => {
+      const target = (event.target as Element | null)?.closest<HTMLElement>("[data-tooltip]");
+      if (!target || !root.contains(target)) return;
+      const rect = target.getBoundingClientRect();
+      setTip({ label: target.dataset.tooltip ?? "", top: rect.top + rect.height / 2, left: rect.right + 10 });
+    };
+    const hide = () => setTip(null);
+    const leave = (event: Event) => {
+      const target = (event.target as Element | null)?.closest<HTMLElement>("[data-tooltip]");
+      const next = (event as MouseEvent | FocusEvent).relatedTarget;
+      if (target && next instanceof Node && target.contains(next)) return;
+      hide();
+    };
+    const onKey = (event: KeyboardEvent) => { if (event.key === "Escape") hide(); };
+    root.addEventListener("pointerover", show);
+    root.addEventListener("focusin", show);
+    root.addEventListener("pointerout", leave);
+    root.addEventListener("focusout", leave);
+    document.addEventListener("keydown", onKey);
+    window.addEventListener("scroll", hide, true);
+    window.addEventListener("resize", hide);
+    return () => {
+      root.removeEventListener("pointerover", show);
+      root.removeEventListener("focusin", show);
+      root.removeEventListener("pointerout", leave);
+      root.removeEventListener("focusout", leave);
+      document.removeEventListener("keydown", onKey);
+      window.removeEventListener("scroll", hide, true);
+      window.removeEventListener("resize", hide);
+    };
+  }, [rootRef]);
+  if (!tip) return null;
+  return createPortal(<div className="rail-tooltip" role="presentation" aria-hidden="true" style={{ top: tip.top, left: tip.left }}>{tip.label}</div>, document.body);
 }
 
 /* ------------------------------------------------------------------------ */
@@ -326,7 +392,7 @@ export function NavItem({
   }
   return (
     <Link href={href} onClick={close} className={cx("nav", active && "nav-active")} aria-current={active ? "page" : undefined}>
-      <Icon size={18} />
+      <Icon size={20} />
       <span className="nav-label">{label}</span>
       {badge}
     </Link>

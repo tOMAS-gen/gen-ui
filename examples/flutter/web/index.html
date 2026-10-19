@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <base href="$FLUTTER_BASE_HREF">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Pantallas de ejemplo de ›gen, desarrolladas en Flutter.">
+  <title>›gen · Flutter</title>
+  <style>
+    body { margin: 0; background: #f4f5f8; color: #111118; font-family: sans-serif; }
+    #loading { padding: 48px 24px; text-align: center; font-size: 14px; }
+  </style>
+</head>
+<body>
+  <p id="loading" role="status">Cargando la pantalla Flutter…</p>
+  <script>
+    if (new URLSearchParams(location.search).get('theme') === 'dark') {
+      document.body.style.background = '#0c0c0c'; document.body.style.color = '#f0f0f0';
+    }
+    window.addEventListener('flutter-first-frame', function () { document.getElementById('loading')?.remove(); });
+  </script>
+  <script src="flutter_bootstrap.js" async></script>
+</body>
+</html>

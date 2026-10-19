@@ -1,0 +1,11 @@
+/* Identidad de la biblioteca ›gen UI. */
+:root {
+  --accent: #f97316;
+  --accent-text: #c2410c;
+  --on-accent: #171717;
+}
+[data-theme="dark"] {
+  --accent: #f97316;
+  --accent-text: #fb923c;
+  --on-accent: #171717;
+}
