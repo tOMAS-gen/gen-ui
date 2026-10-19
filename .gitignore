@@ -3,3 +3,4 @@ dist
 playground/dist
 *.tgz
 .DS_Store
+playground/public/flutter/

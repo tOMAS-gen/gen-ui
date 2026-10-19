@@ -1,7 +1,7 @@
 # gen-ui
 
-Componentes y estilos compartidos de las plataformas ›gen: **genwork**, **gen saas**, **licencia** y lo que
-venga. Todas se ven igual; cada producto cambia sólo el color de marca.
+Biblioteca general de componentes, estilos y ejemplos para React y Flutter.
+La identidad de **›gen UI** usa naranja `#F97316` como color principal.
 
 El sistema visual sale de genwork (que a su vez sigue a genstock). Las reglas están en
 [DESIGN.md](DESIGN.md) y los nombres comunes en [NOMENCLATURA.md](NOMENCLATURA.md).
@@ -22,7 +22,7 @@ const nextConfig = { transpilePackages: ["@gen/ui"] };
 import { Montserrat, Roboto_Mono } from "next/font/google";
 import Link from "next/link";
 import "@gen/ui/styles.css";
-import "@gen/ui/themes/gensaas.css"; // la marca, siempre DESPUÉS de styles.css
+import "@gen/ui/themes/ui.css"; // siempre DESPUÉS de styles.css
 import { GenUIProvider, ThemeScript, ToastProvider } from "@gen/ui";
 
 const sans = Montserrat({ subsets: ["latin"], variable: "--font-sans" });
@@ -49,27 +49,70 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 Íconos: `import { Server, Globe } from "@gen/ui/icons"` (Material Symbols Outlined en SVG, sin fuentes).
 Tailwind (opcional): `presets: [require("@gen/ui/tailwind-preset")]`.
 
-## Marcas
+## Tema UI
 
-| Tema | Claro | Oscuro |
-| --- | --- | --- |
-| `themes/genwork.css` | `#3b5bfa` | `#5b7fff` |
-| `themes/gensaas.css` | `#e52713` (rojo ›gen) | `#ff3939` |
-| `themes/genstock.css` | `#13e28e` | `#13e28e` |
-
-Un tema nuevo define tres variables por modo: `--accent`, `--accent-text` (el accent usado como texto, más
-oscuro si no llega a AA) y `--on-accent` (texto sobre el accent). `--accent-soft` se deriva solo.
+Importá `@gen/ui/themes/ui.css` después de los estilos compartidos. El color principal es `#F97316`.
+El texto usa `#C2410C` en claro y `#FB923C` en oscuro para mantener contraste. Los botones naranjas
+usan texto oscuro. Los colores semánticos de éxito, advertencia y error conservan su significado.
 
 ## Desarrollo
 
 ```bash
 npm install
-npm run dev        # galería en http://localhost:5180 con selector de marca y tema
+npm run build:flutter # prepara las vistas previas Flutter (requiere Flutter 3.44+)
+npm run dev        # catálogo en http://localhost:5180 con tema claro y oscuro
 npm test           # vitest + Testing Library
 npm run typecheck
 ```
 
 La galería (`@gen/ui/gallery`) también se monta en la ruta `/ui` de cada producto.
+
+## Catálogo de pantallas React y Flutter
+
+El playground es una biblioteca general de **›gen UI** con color principal **naranja `#F97316`**.
+Incluye login, registro, recuperación, proyectos, panel de administración, inventario y ventas,
+clientes y configuración. Cada ejemplo ofrece código y vista previa en las plataformas disponibles.
+No hay selección de producto o entorno: todos los ejemplos usan la misma identidad.
+
+La sección Componentes conserva la galería React existente.
+
+- `playground/src/examples/`: pantallas React, compuestas con `@gen/ui`.
+- `examples/flutter/lib/`: implementaciones Flutter y tema compartido, con Montserrat y Roboto Mono incluidas como assets.
+- `playground/src/catalog-data.ts`: registro de pantallas. El código mostrado se importa de los archivos
+  que ejecuta cada demo; no hay snippets duplicados que mantener.
+
+Los ejemplos simulan acciones con estado local. No envían correos, autentican usuarios ni guardan datos
+en un servidor. La sección **Empezar** explica cómo integrarlos en una aplicación real.
+
+Para ejecutar Flutter por separado:
+
+```bash
+cd examples/flutter
+flutter pub get
+flutter run -d chrome
+flutter analyze
+flutter test
+```
+
+La preview Flutter del catálogo ejecuta la compilación web real dentro de un iframe. Después de cambiar
+un archivo Dart, ejecutá `npm run build:flutter` y recargá la preview. Si todavía no se compiló, el catálogo
+muestra instrucciones y permite consultar el código Dart igualmente. Los widgets también se pueden
+integrar en proyectos Flutter para Android/iOS; este repositorio sólo configura el destino web.
+
+Para generar el sitio completo y servirlo localmente:
+
+```bash
+npm run build:catalog
+npm run preview:catalog
+```
+
+Publicá el contenido de `playground/dist/` en un hosting estático. Para un subdirectorio:
+`npm run build:catalog -- --base=/ui/`. `npm run build:playground` sigue disponible para compilar React sin
+necesitar Flutter; incluye la preview Flutter si ya existe en `playground/public/flutter/`.
+Los archivos Flutter compilados se generan localmente y se excluyen de Git.
+
+Cada pantalla se puede compartir por URL, por ejemplo:
+`?screen=dashboard`, `?screen=admin-panel` o `?screen=inventory-dashboard&theme=dark`.
 
 ## Publicar una versión
 

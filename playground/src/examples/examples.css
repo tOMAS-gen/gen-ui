@@ -1,0 +1,56 @@
+.example-form {
+  display: grid;
+  gap: 16px;
+}
+.example-panel {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 16px;
+  margin-top: 16px;
+  min-width: 0;
+}
+.example-panel h2 {
+  font-size: 16px;
+}
+.example-panel h3 {
+  font-size: 14px;
+}
+.example-panel p {
+  margin: 4px 0 16px;
+}
+.example-section-heading,
+.example-tip {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+.example-tip p {
+  margin-bottom: 0;
+}
+.example-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  align-items: center;
+}
+.example-toolbar > :first-child {
+  flex: 1 1 200px;
+}
+.example-toolbar > select {
+  width: auto;
+}
+.example-empty {
+  padding: 24px;
+  text-align: center;
+}
+.example-settings {
+  max-width: 640px;
+}
+.example-settings hr {
+  width: 100%;
+  margin: 4px 0;
+  border-top: 1px solid var(--border);
+}

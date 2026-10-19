@@ -1,6 +1,6 @@
 "use client";
 
-import { forwardRef, type ButtonHTMLAttributes, type ReactNode } from "react";
+import { forwardRef, type AnchorHTMLAttributes, type ButtonHTMLAttributes, type ReactNode } from "react";
 import { cx } from "../lib/cx";
 import { useGenUI } from "./Provider";
 
@@ -65,7 +65,8 @@ export function ButtonLink({
   icon,
   className,
   children,
-}: {
+  ...props
+}: AnchorHTMLAttributes<HTMLAnchorElement> & {
   href: string;
   variant?: ButtonVariant;
   size?: "md" | "sm";
@@ -76,7 +77,7 @@ export function ButtonLink({
 }) {
   const { Link } = useGenUI();
   return (
-    <Link href={href} className={cx("btn", VARIANT_CLASS[variant], size === "sm" && "btn-sm", block && "btn-block", className)}>
+    <Link {...props} href={href} className={cx("btn", VARIANT_CLASS[variant], size === "sm" && "btn-sm", block && "btn-block", className)}>
       {icon}
       {children}
     </Link>

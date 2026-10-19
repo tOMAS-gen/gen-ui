@@ -106,7 +106,7 @@ const STATUS = {
  * Galería de todos los componentes de gen-ui. La usan el playground de la
  * librería y la ruta /ui de cada producto para verificar la marca activa.
  */
-export function Gallery({ heading = "Componentes" }: { heading?: string }) {
+export function Gallery({ heading = "Componentes", showThemeToggle = true }: { heading?: string; showThemeToggle?: boolean }) {
   const { toast } = useToast();
   const [tab, setTab] = useState("resumen");
   const [segment, setSegment] = useState<"dia" | "semana" | "mes">("semana");
@@ -132,11 +132,11 @@ export function Gallery({ heading = "Componentes" }: { heading?: string }) {
     <div className="gallery page-stack">
       <PageHeader
         title={heading}
-        description="Sistema de componentes compartido por las plataformas ›gen. Sólo cambia la marca."
+        description="Componentes de interfaz para construir tus aplicaciones."
         icon={LayoutGrid}
         actions={
           <>
-            <ThemeToggle mini />
+            {showThemeToggle && <ThemeToggle mini />}
             <Button variant="primary" icon={<Plus size={18} />} onClick={() => toast("Acción simulada", "success")}>
               Nuevo servicio
             </Button>
@@ -426,13 +426,13 @@ export function Gallery({ heading = "Componentes" }: { heading?: string }) {
         </CardGrid>
         <RecordList>
           <RecordRow title="menuweb.ar" subtitle="Certificado válido hasta 08/01/2027" leading={<Globe size={20} />} meta={<StatusPill tone="success">Activo</StatusPill>} actions={<Button size="sm">Configurar</Button>} />
-          <RecordRow title="work.gen.net.ar" subtitle="Proxy → gen-node-01:3010" leading={<Globe size={20} />} meta={<StatusPill tone="warning">Renovar</StatusPill>} actions={<Button size="sm">Configurar</Button>} />
+          <RecordRow title="app.example.com" subtitle="Proxy → gen-node-01:3010" leading={<Globe size={20} />} meta={<StatusPill tone="warning">Renovar</StatusPill>} actions={<Button size="sm">Configurar</Button>} />
         </RecordList>
         <Card>
           <DescriptionList
             items={[
               { term: "Servidor", detail: "gen-node-01" },
-              { term: "Imagen", detail: <span className="mono">ghcr.io/tomas-gen/genwork:1.4.2</span> },
+              { term: "Imagen", detail: <span className="mono">ghcr.io/example/app:1.4.2</span> },
               { term: "Memoria", detail: "512 MB de 1 GB" },
             ]}
           />

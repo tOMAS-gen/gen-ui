@@ -34,6 +34,9 @@
   "scripts": {
     "dev": "vite --config playground/vite.config.ts",
     "build:playground": "vite build --config playground/vite.config.ts",
+    "build:flutter": "node scripts/build-flutter.mjs",
+    "build:catalog": "npm run build:flutter && npm run build:playground --",
+    "preview:catalog": "vite preview --config playground/vite.config.ts --port 5180",
     "typecheck": "tsc --noEmit",
     "test": "vitest run",
     "pack": "npm pack"

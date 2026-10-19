@@ -26,7 +26,7 @@ los productos; sólo cambia la marca.
 
 ## Estructura
 
-- Barra superior 40px (48 en mobile), sidebar 240px redimensionable hasta 400, rail de íconos 48px.
+- Barra superior 40px (48 en mobile), sidebar 240px redimensionable hasta 400, rail de íconos 57px.
 - Padding de página y de card 16px. Ritmo 4/8: 4, 8, 12, 16, 24, 32, 48.
 - Estado activo con lengüeta de 3px: nav, tabs, orden activo.
 - Filas de tabla de 44px; controles con etiqueta de al menos 44–48px de área táctil.
@@ -39,3 +39,20 @@ los productos; sólo cambia la marca.
 - Transiciones de 150–200ms; respetar `prefers-reduced-motion`.
 - Navegación por teclado completa, nombres accesibles, y estados de vacío, carga y error en toda vista.
 - Contraste AA: el texto sobre la marca usa `--on-accent` (oscuro cuando el accent es claro).
+
+## La biblioteca se usa a sí misma
+
+El catálogo es consumidor de los componentes públicos de `src/`. No tiene una segunda versión visual
+de botones, campos o navegación. Sus estilos locales sólo distribuyen contenido y vistas previas.
+Una capacidad ausente se implementa como parte reutilizable de la biblioteca antes de usarla.
+No se incorporan controles de otra biblioteca para resolver necesidades exclusivas del catálogo.
+
+El drawer usa `AppShell`, `SidebarNav`, `NavSection` y `NavItem`, tanto en el catálogo como en las apps.
+En escritorio mide 240–400 px y colapsa a un rail de 57 px; conserva ancho y colapso.
+En móvil abre sobre el contenido, con overlay, cierre por Escape o navegación, control del foco y retorno
+al disparador. Cualquier corrección de este comportamiento pertenece al componente compartido.
+
+Selección del drawer: fila de 40px e ícono de 20px con mouse, margen lateral de 8px y separación de 4px.
+La marca activa de 3px queda fuera del recuadro, pegada al borde del menú. Hover neutro y selección con
+el color principal; foco interior visible. En táctil las filas conservan al menos 48px. Los tooltips del
+rail se dibujan fuera del scroll y pertenecen a `AppShell`, sin adaptaciones por aplicación.

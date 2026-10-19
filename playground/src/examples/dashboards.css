@@ -1,0 +1,107 @@
+/* Estilos de los ejemplos de proyectos y administración. */
+.product-demo-label {
+  font-size: 11px;
+  color: var(--muted);
+}
+.project-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 320px), 1fr));
+  gap: 16px;
+}
+.project-card {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 16px;
+  min-width: 0;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--surface);
+}
+.project-card:hover {
+  border-color: var(--accent);
+}
+.project-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 8px;
+}
+.project-name {
+  font-size: 14px;
+  font-weight: 600;
+  text-align: left;
+  overflow-wrap: anywhere;
+  min-width: 0;
+  padding: 4px 8px;
+  border-radius: 4px;
+  background: color-mix(in srgb, var(--project-color) 14%, var(--surface));
+  color: var(--text);
+}
+.card-actions {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  flex-shrink: 0;
+}
+.product-favorite {
+  color: var(--muted);
+  background: transparent;
+  border-radius: 6px;
+  width: 32px;
+  height: 32px;
+  display: grid;
+  place-items: center;
+}
+.product-favorite.active {
+  color: var(--color-favorite);
+}
+.product-favorite:hover {
+  background: var(--hover-soft);
+}
+.pc-group {
+  font-size: 14px;
+  color: var(--muted);
+}
+.pc-due {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 8px;
+  color: var(--muted);
+  font-size: 12px;
+}
+.pc-due > span {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+.pc-card-footer {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: auto;
+  padding-top: 4px;
+  min-width: 0;
+}
+.pc-task-count {
+  font-size: 12px;
+  color: var(--muted);
+}
+.product-groups {
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 8px;
+}
+.product-groups legend {
+  font-size: 12px;
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+.product-project-link {
+  background: transparent;
+  padding: 4px 0;
+  color: var(--accent-text);
+  text-align: left;
+  font-size: 13px;
+}
