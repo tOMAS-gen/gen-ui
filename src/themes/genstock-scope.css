@@ -1,0 +1,25 @@
+/* Marca genstock acotada a un subárbol: `<div data-brand="genstock">`. Para apps que muestran
+ * más de una marca a la vez (p. ej. gen saas con su espacio GenStock). Importar DESPUÉS del tema
+ * base de la app y de `@gen/ui/styles.css`. Los valores son los de `genstock.css`. */
+[data-brand="genstock"] {
+  --accent: #13e28e;
+  --accent-text: #087a4c; /* verde tinta de genstock-inventory: texto e íconos sobre claro */
+  --on-accent: #0c0c0c;
+  /* Derivados de --accent: se resuelven en :root, así que hay que recalcularlos acá. */
+  --accent-soft: color-mix(in srgb, var(--accent) 8%, var(--surface));
+}
+
+[data-theme="dark"] [data-brand="genstock"] {
+  --accent: #13e28e;
+  --accent-text: #13e28e;
+  --on-accent: var(--bg);
+  --accent-soft: color-mix(in srgb, var(--accent) 14%, transparent);
+}
+
+/* Texto y logo de marca: en claro van en verde tinta (el relleno #13e28e no contrasta sobre gris claro).
+ * En oscuro --accent-text es el mismo verde brillante, así que no cambia nada. */
+[data-brand="genstock"] .brand-gen,
+[data-brand="genstock"] .auth-split-headline span,
+[data-brand="genstock"] .auth-split-highlights li {
+  color: var(--accent-text);
+}

@@ -2,7 +2,7 @@
  * El verde es claro: el texto sobre la marca es oscuro en ambos temas. */
 :root {
   --accent: #13e28e;
-  --accent-text: #0a7d4f;
+  --accent-text: #087a4c; /* verde tinta de genstock-inventory: texto e íconos sobre claro */
   --on-accent: #0c0c0c;
 }
 
