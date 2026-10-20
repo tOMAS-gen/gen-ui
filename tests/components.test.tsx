@@ -2,6 +2,7 @@ import { act, cleanup, fireEvent, render, screen } from "@testing-library/react"
 import { useState } from "react";
 import { afterEach, describe, expect, it, vi } from "vitest";
 import { initials } from "../src/components/Alert";
+import { AuthSplit } from "../src/components/Auth";
 import { Field, Input, PasswordInput } from "../src/components/Field";
 import { OtpInput, sanitizeOtp } from "../src/components/OtpInput";
 import { pageWindow } from "../src/components/Pagination";
@@ -147,5 +148,39 @@ describe("Toast", () => {
     expect(screen.queryByText("Guardado")).toBeNull();
     expect(screen.getByText("Con link")).toBeTruthy();
     vi.useRealTimers();
+  });
+});
+
+describe("AuthSplit", () => {
+  it("renderiza marca, formulario y fondo por variable CSS", () => {
+    const { container } = render(
+      <AuthSplit
+        product="stock"
+        headline="Titular"
+        headlineAccent="acento"
+        title="Ingresá"
+        backgroundImage="/bg.jpg"
+        info={<button>Información</button>}
+      >
+        <p>cuerpo</p>
+      </AuthSplit>,
+    );
+    expect(screen.getByRole("heading", { name: "Ingresá" })).toBeTruthy();
+    expect(screen.getByText("acento")).toBeTruthy();
+    expect(screen.getByText("cuerpo")).toBeTruthy();
+    expect(screen.getByText("Información")).toBeTruthy();
+    expect((container.firstChild as HTMLElement).style.getPropertyValue("--auth-split-bg")).toBe('url("/bg.jpg")');
+    expect((container.firstChild as HTMLElement).className).not.toContain("auth-split-plain");
+  });
+
+  it("sin foto usa el fondo plano", () => {
+    const { container } = render(
+      <AuthSplit title="Ingresá">
+        <p>cuerpo</p>
+      </AuthSplit>,
+    );
+    const root = container.firstChild as HTMLElement;
+    expect(root.className).toContain("auth-split-plain");
+    expect(root.style.getPropertyValue("--auth-split-bg")).toBe("");
   });
 });

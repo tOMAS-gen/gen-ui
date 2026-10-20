@@ -29,7 +29,7 @@ necesita algo que no está acá, primero se agrega a gen-ui y después se usa.
 | Diálogo de texto | `PromptDialog` | `.dialog` | `RenameDialog` (alias conservado) |
 | Avisos flotantes | `useToast` / `showToast` | `.toast-stack` | dos sistemas → uno |
 | Código de verificación | `OtpInput` | `.otp` | — (nuevo) |
-| Acceso | `AuthLayout`, `GoogleButton` | `.login-wrap`, `.auth-card` | `.login-card` |
+| Acceso | `AuthLayout`, `AuthSplit`, `GoogleButton` | `.login-wrap`, `.auth-card`, `.auth-split*` | `.login-card` |
 
 ## Props
 

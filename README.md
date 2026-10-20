@@ -87,7 +87,7 @@ La galería (`@gen/ui/gallery`) también se monta en la ruta `/ui` de cada produ
 | Feedback | `ToastProvider`/`useToast`/`showToast`, `InlineAlert`, `Dialog`, `showConfirm`, `PromptDialog` (`RenameDialog`), `Skeleton`, `EmptyState`, `ProgressBar`, `ProgressRing` |
 | Navegación | `AppShell`, `SidebarNav`, `NavSection`, `NavItem`, `NavGroup`, `NavSubItem`, `SidebarProfile`, `SidebarLogout`, `Tabs`, `RouteTabs`, `SegmentedControl`, `ViewSwitch`, `Breadcrumbs`, `Pagination`, `Menu` |
 | Página y datos | `PageHeader`, `PageStack`, `SectionPanel`, `SectionLabel`, `RecordList`, `RecordRow`, `DescriptionList`, `StatsBar`, `StatCard`, `Toolbar`, `ToolbarFilterField`, `FilterPill`, `DataTable` |
-| Tema y acceso | `GenUIProvider`, `ThemeScript`, `useTheme`, `ThemeToggle`, `AuthLayout`, `GoogleButton` |
+| Tema y acceso | `GenUIProvider`, `ThemeScript`, `useTheme`, `ThemeToggle`, `AuthLayout`, `AuthSplit`, `GoogleButton` |
 
 Origen del CSS: `scripts/extract-genwork-css.py` registra qué rangos de `genwork/src/app/globals.css` se
 extrajeron para la v0.1.0.

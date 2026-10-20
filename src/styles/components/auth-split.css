@@ -1,0 +1,501 @@
+/* AuthSplit: acceso en dos columnas (marca + formulario). Foto de fondo vía --auth-split-bg. */
+
+/* Casillas del código: seis iguales que reparten todo el ancho, con un único indicador de foco
+ * (anillo suave) que se distingue del error (borde y fondo de peligro). */
+.auth-split-inner .otp {
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  gap: 10px;
+}
+.auth-split-inner .otp input {
+  width: 100%;
+  min-width: 0;
+  height: 56px;
+  border: 1px solid var(--outline);
+  border-radius: var(--radius-md);
+  background: var(--field);
+  font-size: 24px;
+  transition: border-color var(--dur-fast) ease, box-shadow var(--dur-fast) ease;
+}
+.auth-split-inner .otp input:not(:placeholder-shown) {
+  border-color: var(--muted);
+  background: var(--field);
+}
+.auth-split-inner .otp input:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 24%, transparent);
+}
+.auth-split-inner .otp-error input {
+  border-color: var(--color-danger);
+  background: var(--color-danger-bg);
+}
+.auth-split-inner .otp-error input:focus {
+  border-color: var(--color-danger);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-danger) 24%, transparent);
+}
+@media (max-width: 380px) {
+  .auth-split-inner .otp {
+    gap: 6px;
+  }
+  .auth-split-inner .otp input {
+    height: 50px;
+    font-size: 20px;
+  }
+}
+
+.panel-loading {
+  height: 100dvh;
+  padding: 16px;
+}
+
+/* Acceso en dos columnas (ver AuthSplit): marca a la izquierda, formulario a la derecha */
+.auth-split {
+  position: relative;
+  isolation: isolate;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(460px, 1fr);
+  min-height: 100dvh;
+  background: #0c0c0c;
+  /* Todo escala con la altura de la ventana para que la pantalla entre sin scroll */
+  --gap: clamp(10px, 2.4dvh, 24px);
+  --field-h: clamp(40px, 5.6dvh, 48px);
+  --btn-h: clamp(44px, 6.2dvh, 52px);
+}
+/* Foto de fondo a pantalla completa + velo: claro a la izquierda (deja ver el arco y las
+ * montañas) y más oscuro del lado del formulario para que la tarjeta se lea. */
+.auth-split::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background:
+    linear-gradient(90deg, rgba(12, 12, 12, 0.82) 0%, rgba(12, 12, 12, 0.55) 40%, rgba(12, 12, 12, 0.78) 62%, rgba(12, 12, 12, 0.88) 100%),
+    linear-gradient(180deg, rgba(12, 12, 12, 0.55) 0%, rgba(12, 12, 12, 0.1) 30%, rgba(12, 12, 12, 0.25) 70%, rgba(12, 12, 12, 0.8) 100%),
+    var(--auth-split-bg, none) 60% 100% / cover no-repeat;
+}
+/* Tema claro: la misma foto, aclarada con capas gris claro difuminadas por delante (degradados), de
+ * modo que el arco rojo y las montañas se sigan insinuando y el texto oscuro se lea. */
+:root:not([data-theme="dark"]) .auth-split {
+  background: #e4e6ea;
+}
+:root:not([data-theme="dark"]) .auth-split::before {
+  background:
+    radial-gradient(ellipse 55% 65% at 18% 45%, rgba(228, 230, 234, 0.8) 0%, rgba(228, 230, 234, 0.4) 55%, rgba(228, 230, 234, 0) 100%),
+    linear-gradient(90deg, rgba(228, 230, 234, 0.6) 0%, rgba(228, 230, 234, 0.4) 45%, rgba(228, 230, 234, 0.5) 100%),
+    linear-gradient(180deg, rgba(228, 230, 234, 0.35) 0%, rgba(228, 230, 234, 0) 40%, rgba(228, 230, 234, 0.35) 100%),
+    var(--auth-split-bg, none) 60% 100% / cover no-repeat;
+}
+
+/* Sin foto (`backgroundImage` ausente): superficie plana del tema, sin velos ni degradados. */
+.auth-split-plain,
+:root:not([data-theme="dark"]) .auth-split-plain {
+  background: var(--bg);
+}
+.auth-split-plain::before,
+:root:not([data-theme="dark"]) .auth-split-plain::before {
+  display: none;
+}
+
+/* ---- Columna de marca (sigue el tema; la foto de fondo cambia con él) ---- */
+.auth-split-brand {
+  position: relative;
+  isolation: isolate;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  padding: clamp(24px, 4.5dvh, 64px) clamp(32px, 4.5vw, 64px);
+  color: var(--text);
+}
+
+.auth-split-logo.brand-logo {
+  font-size: clamp(36px, min(4.6vw, 7dvh), 60px);
+  line-height: 1;
+  font-weight: 600;
+  color: var(--accent);
+}
+
+.auth-split-pitch {
+  display: grid;
+  flex: 1;
+  align-content: center;
+  gap: clamp(10px, 2.6dvh, 24px);
+  padding-block: var(--space-2);
+}
+.auth-split-eyebrow {
+  margin: 0;
+  font-size: var(--text-xs);
+  font-weight: 500;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: color-mix(in srgb, var(--text) 75%, transparent);
+}
+.auth-split-headline {
+  margin: 0;
+  max-width: 16ch;
+  font-size: clamp(30px, min(3.4vw, 6dvh), 52px);
+  line-height: 1.04;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  text-wrap: balance;
+}
+.auth-split-headline span {
+  display: block;
+  color: var(--accent);
+}
+.auth-split-lead {
+  margin: 0;
+  max-width: 40ch;
+  font-size: clamp(14px, 2.1dvh, 17px);
+  line-height: 1.55;
+  color: color-mix(in srgb, var(--text) 80%, transparent);
+}
+.auth-split-highlights {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-4) clamp(20px, 3vw, 40px);
+  margin: clamp(4px, 1.6dvh, 16px) 0 0;
+  padding: 0;
+  list-style: none;
+}
+.auth-split-highlights li {
+  display: grid;
+  justify-items: center;
+  gap: 8px;
+  color: var(--accent);
+}
+.auth-split-highlights strong {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--text);
+}
+.auth-split-made {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 0;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: color-mix(in srgb, var(--text) 70%, transparent);
+}
+.auth-split-flag {
+  width: 22px;
+  height: 14px;
+  border-radius: 2px;
+  background: linear-gradient(#74acdf 0 33%, #fff 33% 66%, #74acdf 66%);
+}
+
+/* ---- Columna del formulario ---- */
+.auth-split-form {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: clamp(16px, 3dvh, 32px) clamp(20px, 3.5vw, 56px) 64px; /* abajo: lugar para «Información» */
+}
+.auth-split-aside {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  z-index: var(--z-dropdown);
+}
+.auth-split-aside .theme-menu-dropdown {
+  top: calc(100% + 4px);
+  right: 0;
+  bottom: auto;
+  left: auto;
+}
+/* El formulario vive en una tarjeta: lo acerca al contenido de la izquierda */
+.auth-split-inner {
+  display: grid;
+  gap: var(--gap);
+  width: 100%;
+  max-width: 520px;
+  padding: clamp(20px, 4dvh, 44px) clamp(24px, 3vw, 44px);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  background: var(--surface);
+  box-shadow: var(--shadow-lg);
+}
+.auth-split-logo-mobile {
+  display: none;
+  font-size: var(--text-2xl);
+}
+.auth-split-header {
+  display: grid;
+  justify-items: start;
+  gap: var(--space-2);
+}
+.auth-split-title {
+  margin: 0;
+  font-size: clamp(22px, min(2.4vw, 4dvh), 28px);
+  line-height: 1.15;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+.auth-split-subtitle {
+  margin: 0;
+  max-width: 36ch;
+  font-size: clamp(13px, 1.9dvh, 15px);
+  line-height: 1.5;
+  color: var(--muted);
+}
+.auth-split-form .auth-body {
+  gap: var(--gap);
+}
+.auth-split-form .form-stack {
+  gap: var(--gap);
+}
+
+/* Campos y botones: más altos y con estados de foco/hover más cuidados */
+.auth-split-form {
+  /* Más contraste que el default de gen-ui para texto de ayuda y bordes de campos */
+  --muted: #b4b4b4;
+  --border: #3d3d3d;
+  --outline: #4d4d4d;
+}
+:root:not([data-theme="dark"]) .auth-split-form {
+  --muted: #55596a;
+  --border: #b4bac6;
+  --outline: #a0a7b5;
+}
+.auth-split-form .input-wrap > input {
+  min-height: var(--field-h);
+  font-size: 15px;
+  border-color: var(--outline);
+  border-radius: var(--radius-md);
+  transition: border-color var(--dur-fast) ease, box-shadow var(--dur-fast) ease, background var(--dur-fast) ease;
+}
+.auth-split-form .input-wrap-start > input {
+  padding-left: 44px;
+}
+.auth-split-form .input-adornment {
+  left: 14px;
+}
+.auth-split-form .input-wrap > input:hover:not(:disabled) {
+  border-color: var(--muted);
+  background: color-mix(in srgb, var(--field) 80%, var(--hover-soft));
+}
+.auth-split-form .input-wrap > input:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 24%, transparent);
+}
+.auth-split-form .field-label-row .link-btn {
+  color: var(--text);
+  font-weight: 500;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.auth-split-form .field-label-row .link-btn:hover {
+  color: var(--accent-text);
+}
+.auth-split-form .check {
+  font-size: 14px;
+}
+.auth-split-form .check-hint {
+  font-size: 13px;
+}
+.auth-split-form .field-label {
+  font-size: 13px;
+  font-weight: 500;
+}
+.auth-split-form .btn {
+  min-height: var(--field-h);
+  border-radius: var(--radius-md);
+  font-size: 14px;
+}
+.auth-split-form .btn-google:hover {
+  border-color: var(--outline);
+  background: var(--hover-soft);
+}
+.auth-split-form .btn-primary {
+  min-height: var(--btn-h);
+  gap: 8px;
+  font-size: 15px;
+  box-shadow: 0 10px 28px -10px color-mix(in srgb, var(--accent) 80%, transparent);
+  transition: filter var(--dur-fast) ease, transform var(--dur-fast) ease, box-shadow var(--dur-fast) ease;
+}
+.auth-split-form .btn-primary:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 14px 32px -10px color-mix(in srgb, var(--accent) 90%, transparent);
+}
+.auth-split-form .btn-primary:active {
+  transform: translateY(0) scale(0.99);
+}
+.auth-split-form .btn-primary:focus-visible,
+.auth-split-form .btn:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+
+.auth-split-footer {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2) var(--space-4);
+  padding-top: var(--gap);
+  border-top: 1px solid var(--border);
+  font-size: 13px;
+  text-align: center;
+  color: var(--muted);
+}
+
+/* Menos de 1100px: un único bloque centrado (máx. 460px) con logo, título, formulario, ayuda e
+ * «Información» en el mismo contenedor, sobre fondo sólido (#171717 en oscuro). Si no hay
+ * altura suficiente queda arriba y la página scrollea (teclado, errores). */
+.auth-split-info {
+  display: none;
+}
+@media (max-width: 1099px) {
+  .auth-split {
+    grid-template-columns: minmax(0, 1fr); /* sin min-content: nada puede ensanchar la columna */
+    overflow-x: clip;
+    background: var(--surface);
+    --gap: 22px;
+    --field-h: 50px;
+    --btn-h: 52px;
+  }
+  [data-theme="dark"] .auth-split {
+    background: #171717;
+  }
+  .auth-split::before,
+  .auth-split-brand {
+    display: none;
+  }
+  .auth-split-form {
+    min-width: 0;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center; /* centrado vertical cuando hay altura; si falta, crece y scrollea */
+    padding: 32px max(24px, env(safe-area-inset-right)) max(32px, env(safe-area-inset-bottom))
+      max(24px, env(safe-area-inset-left));
+    background: none;
+  }
+  /* Sin tarjeta: todo comparte el mismo contenedor y las separaciones son constantes */
+  .auth-split-inner {
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    width: 100%;
+    min-width: 0;
+    max-width: 460px;
+    padding: 0;
+    border: 0;
+    border-radius: 0;
+    background: none;
+    box-shadow: none;
+  }
+  .auth-split-logo-mobile {
+    display: inline-block;
+    align-self: flex-start;
+    margin-bottom: 24px; /* logo → título */
+    color: var(--accent);
+    font-size: 50px; /* ≈ 104–120px de ancho */
+    font-weight: 600;
+    line-height: 1;
+    letter-spacing: -0.02em;
+  }
+  .auth-split-header {
+    gap: 6px;
+  }
+  .auth-split-form .auth-body {
+    margin-top: 28px; /* descripción → Google */
+    gap: var(--gap);
+  }
+  .auth-split-form .form-stack {
+    gap: var(--gap);
+  }
+  .auth-split-form .field {
+    gap: 8px; /* etiqueta → campo */
+  }
+  .auth-split-form .divider {
+    margin-block: -4px;
+  }
+  .auth-split-footer {
+    margin-top: 24px; /* botón → ayuda */
+    padding-top: 0;
+    border-top: 0;
+  }
+  /* «Información»: enlace discreto, bajo la ayuda, dentro del bloque (zona táctil de 44px) */
+  .auth-split-info {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    align-self: center;
+    gap: 8px;
+    min-height: 44px;
+    margin-top: 24px; /* ayuda → Información */
+    padding: 0 12px;
+    border: 0;
+    background: none;
+    color: var(--muted);
+    font-size: 14px;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+  .auth-split-info svg {
+    color: var(--accent-text);
+  }
+  .auth-split-info:hover {
+    color: var(--text);
+  }
+  .auth-split-info:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+  }
+}
+@media (min-width: 600px) and (max-width: 1099px) {
+  .auth-split-form {
+    padding-inline: 32px;
+  }
+}
+
+/* Ventanas muy bajas: se saca lo accesorio para seguir entrando sin scroll */
+@media (max-height: 700px) and (min-width: 1100px) {
+  .auth-split-subtitle,
+  .auth-split-form .check .field-hint,
+  .auth-split-form .check-hint {
+    display: none;
+  }
+}
+@media (max-height: 660px) and (min-width: 1100px) {
+  .auth-split {
+    --field-h: 42px;
+    --btn-h: 46px;
+    --gap: 10px;
+  }
+  .auth-split-form .field {
+    gap: 4px;
+  }
+}
+@media (max-height: 600px) and (min-width: 1100px) {
+  .auth-split {
+    --field-h: 40px;
+    --btn-h: 44px;
+    --gap: 8px;
+  }
+  .auth-split-title {
+    font-size: 20px;
+  }
+  .auth-split-logo-mobile {
+    font-size: 30px;
+  }
+  .auth-split-inner {
+    padding-block: 14px;
+  }
+  .auth-split-form .check {
+    min-height: 24px;
+    padding-block: 2px;
+  }
+}
+@media (max-height: 620px) and (min-width: 1100px) {
+  .auth-split-lead {
+    display: none;
+  }
+}
+
