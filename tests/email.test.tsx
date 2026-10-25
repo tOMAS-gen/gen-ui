@@ -4,7 +4,17 @@ import { readdirSync, readFileSync, statSync } from "node:fs";
 import path from "node:path";
 import { render, toPlainText } from "react-email";
 import { describe, expect, it } from "vitest";
-import { EmailHeading, EmailLayout, EmailText, emailThemes, type EmailBrand } from "../src/email";
+import {
+  EmailButton,
+  EmailCode,
+  EmailDivider,
+  EmailHeading,
+  EmailLayout,
+  EmailText,
+  emailThemes,
+  type EmailBrand,
+} from "../src/email";
+import { EjemploInvitacion } from "../playground/src/examples/EmailExamples";
 
 const AVISO = "Este es un correo automático, no lo respondas.";
 
@@ -64,6 +74,63 @@ describe("EmailLayout", () => {
     expect(texto).toContain("HOLA, TOMI");
     expect(texto).toContain("Te invitaron al panel de ›gen.");
     expect(texto).toContain(AVISO);
+  });
+});
+
+const ENLACE = "https://saas.gen.net.ar/crear-contrasena?token=abc123";
+
+function ConPiezas({ marca }: { marca: EmailBrand }) {
+  return (
+    <EmailLayout marca={marca} preview="Piezas">
+      <EmailButton href={ENLACE}>Crear contraseña</EmailButton>
+      <EmailDivider />
+      <EmailCode>{ENLACE}</EmailCode>
+    </EmailLayout>
+  );
+}
+
+describe("EmailButton", () => {
+  it.each(["gen", "genstock", "genwork"] as const)("en %s usa el color de la marca y su texto encima", async (marca) => {
+    const html = await render(<ConPiezas marca={marca} />);
+    const tema = emailThemes[marca];
+
+    expect(html).toContain(`href="${ENLACE.replaceAll("&", "&amp;")}"`);
+    expect(html).toContain(`background-color:${tema.accent}`);
+    expect(html).toContain(`color:${tema.onAccent}`);
+    expect(html).toContain("Crear contraseña");
+  });
+
+  it("en la versión en texto queda el enlace, para quien no ve HTML", async () => {
+    const texto = toPlainText(await render(<ConPiezas marca="gen" />));
+    expect(texto).toContain(ENLACE);
+  });
+});
+
+describe("EmailCode", () => {
+  it("muestra el código en letra de ancho fijo, con borde del tema", async () => {
+    const html = await render(<ConPiezas marca="genwork" />);
+
+    // Las comillas del nombre de la fuente salen como &quot; en el HTML.
+    expect(html).toMatch(/font-family:[^>]*monospace/);
+    expect(html).toContain(`border:1px solid ${emailThemes.genwork.border}`);
+    expect(html).toContain(">https://saas.gen.net.ar/crear-contrasena?token=abc123<");
+  });
+});
+
+describe("EmailDivider", () => {
+  it("es una línea con el color de borde del tema", async () => {
+    const html = await render(<ConPiezas marca="gen" />);
+    expect(html).toMatch(new RegExp(`<hr[^>]*${emailThemes.gen.border}`));
+  });
+});
+
+describe("correo de ejemplo de la galería", () => {
+  it.each(["gen", "genstock", "genwork"] as const)("la invitación de %s se arma con todas las piezas", async (marca) => {
+    const html = await render(<EjemploInvitacion marca={marca} />);
+
+    expect(html).toContain(emailThemes[marca].accent);
+    expect(html).toContain("Crear contraseña");
+    expect(html).toContain("Este es un correo automático, no lo respondas.");
   });
 });
 

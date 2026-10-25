@@ -5,3 +5,6 @@ export * from "./themes";
 export * from "./EmailLayout";
 export * from "./EmailHeading";
 export * from "./EmailText";
+export * from "./EmailButton";
+export * from "./EmailCode";
+export * from "./EmailDivider";
