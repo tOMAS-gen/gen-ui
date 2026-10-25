@@ -72,14 +72,15 @@ const text = toPlainText(html);
 
 | Pieza | Para qué |
 | --- | --- |
-| `EmailLayout` (`marca`, `preview`) | Estructura: logotipo de texto (`›gen`, `›genstock`, `›genwork`), tarjeta y aviso "Este es un correo automático, no lo respondas." al pie |
+| `EmailLayout` (`marca`, `preview`) | Estructura: logotipo de texto (`›gen`, `›genstock`, `›genwork`; `›genui` en la galería), tarjeta y aviso "Este es un correo automático, no lo respondas." al pie |
 | `EmailHeading` | Título, uno por correo |
 | `EmailText` (`muted`) | Párrafo; `muted` para aclaraciones |
 | `EmailButton` (`href`) | Acción principal (también se ve en Outlook) |
 | `EmailCode` | Códigos y enlaces para copiar a mano |
 | `EmailDivider` | Separador |
 
-Vista previa: pantalla **Correos** del catálogo (`npm run dev`, `?screen=email`).
+Temas: `ui` (la identidad de gen-ui, la que usa la galería), `gen`, `genstock` y `genwork` (cada producto usa el
+suyo). Vista previa: pantalla **Correos** del catálogo (`npm run dev`, `?screen=email`), con el tema `ui`.
 
 ## Tema UI
 

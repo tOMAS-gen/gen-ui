@@ -14,7 +14,7 @@ import {
   emailThemes,
   type EmailBrand,
 } from "../src/email";
-import { EjemploInvitacion } from "../playground/src/examples/EmailExamples";
+import { EjemploInvitacion, MARCA_GALERIA } from "../playground/src/examples/EmailExamples";
 
 const AVISO = "Este es un correo automático, no lo respondas.";
 
@@ -32,6 +32,7 @@ describe("emailThemes", () => {
     expect(emailThemes.gen.accent).toBe("#e52713");
     expect(emailThemes.genstock.accent).toBe("#13e28e");
     expect(emailThemes.genwork.accent).toBe("#3b5bfa");
+    expect(emailThemes.ui.accent).toBe("#f97316");
   });
 
   it("usa colores fijos, sin variables CSS (los clientes de correo no las soportan)", () => {
@@ -44,7 +45,7 @@ describe("emailThemes", () => {
 });
 
 describe("EmailLayout", () => {
-  it.each(["gen", "genstock", "genwork"] as const)("arma el correo de %s con su color y el aviso al pie", async (marca) => {
+  it.each(["ui", "gen", "genstock", "genwork"] as const)("arma el correo de %s con su color y el aviso al pie", async (marca) => {
     const html = await render(<Ejemplo marca={marca} />);
 
     expect(html).toContain('lang="es"');
@@ -125,10 +126,15 @@ describe("EmailDivider", () => {
 });
 
 describe("correo de ejemplo de la galería", () => {
-  it.each(["gen", "genstock", "genwork"] as const)("la invitación de %s se arma con todas las piezas", async (marca) => {
-    const html = await render(<EjemploInvitacion marca={marca} />);
+  it("la galería de gen-ui muestra solo el tema UI, como el resto del catálogo (sin marcas de producto)", () => {
+    expect(MARCA_GALERIA).toBe("ui");
+  });
 
-    expect(html).toContain(emailThemes[marca].accent);
+  it("la invitación se arma con todas las piezas y el logotipo ›genui", async () => {
+    const html = await render(<EjemploInvitacion />);
+
+    expect(html).toContain(emailThemes.ui.accent);
+    expect(html).toContain(">ui<");
     expect(html).toContain("Crear contraseña");
     expect(html).toContain("Este es un correo automático, no lo respondas.");
   });

@@ -1,7 +1,8 @@
 // Temas de correo: los mismos colores de `src/themes/*.css` y `src/styles/tokens.css` (tema claro), pero como
 // valores fijos. Los clientes de correo no soportan variables CSS ni modo oscuro confiable.
 
-export type EmailBrand = "gen" | "genstock" | "genwork";
+/** `ui` es la identidad de la propia librería: la usa la galería de gen-ui. Las demás, cada producto. */
+export type EmailBrand = "ui" | "gen" | "genstock" | "genwork";
 
 export type EmailTheme = {
   /** Color de la marca: botones y detalles. */
@@ -28,6 +29,7 @@ const base = {
 };
 
 export const emailThemes: Record<EmailBrand, EmailTheme> = {
+  ui: { ...base, accent: "#f97316", accentText: "#c2410c", onAccent: "#171717", product: "ui" },
   gen: { ...base, accent: "#e52713", accentText: "#c8200e", onAccent: "#ffffff" },
   genstock: { ...base, accent: "#13e28e", accentText: "#087a4c", onAccent: "#0c0c0c", product: "stock" },
   genwork: { ...base, accent: "#3b5bfa", accentText: "#3b5bfa", onAccent: "#ffffff", product: "work" },

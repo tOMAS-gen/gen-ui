@@ -84,7 +84,7 @@ export const screens = [
     title: "Correos",
     group: "Correo",
     description:
-      "Una invitación con la marca de cada plataforma, tal como llega a la bandeja de entrada.",
+      "Una invitación armada con las piezas de correo, tal como llega a la bandeja de entrada.",
     web: "EmailExamples.tsx",
     flutter: null,
     parts: "EmailLayout · EmailHeading · EmailText · EmailButton · EmailCode · EmailDivider",
