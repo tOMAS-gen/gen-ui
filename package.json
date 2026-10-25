@@ -1,6 +1,6 @@
 {
   "name": "@gen/ui",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "Componentes y estilos compartidos de las plataformas ›gen (genwork, gen saas, licencia…). Misma UI, cambia sólo la marca.",
   "license": "UNLICENSED",
   "private": false,
