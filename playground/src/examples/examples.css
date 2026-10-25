@@ -54,3 +54,19 @@
   margin: 4px 0;
   border-top: 1px solid var(--border);
 }
+
+/* Correos: el iframe muestra el HTML tal como se envía (sin los estilos de la librería). */
+.email-examples {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 16px;
+}
+
+.email-examples-frame {
+  width: 100%;
+  min-height: 720px;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: #ffffff;
+}

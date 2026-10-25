@@ -79,6 +79,16 @@ export const screens = [
     flutter: "settings_screen.dart",
     parts: "Field · Input · Switch · InlineAlert",
   },
+  {
+    id: "email",
+    title: "Correos",
+    group: "Correo",
+    description:
+      "Una invitación armada con las piezas de correo, tal como llega a la bandeja de entrada.",
+    web: "EmailExamples.tsx",
+    flutter: null,
+    parts: "EmailLayout · EmailHeading · EmailText · EmailButton · EmailCode · EmailDivider",
+  },
 ] as const;
 
 export type ScreenId = (typeof screens)[number]["id"];
@@ -88,6 +98,7 @@ export const examplePlatforms: Partial<Record<PageId, Platform>> = {
   dashboard: "web",
   "admin-panel": "web",
   "inventory-dashboard": "flutter",
+  email: "web",
 };
 
 export function readLocation() {
@@ -132,6 +143,7 @@ export function sourceFiles(
       ? Object.entries(webFiles).map(([path, code]) => ({
           name: path.split("/").pop()!,
           code: code
+            .replaceAll('"../../../src/email"', '"@gen/ui/email"')
             .replaceAll('"../../../src"', '"@gen/ui"')
             .replaceAll('"../../../src/components/icons"', '"@gen/ui/icons"')
             .replaceAll('"../../../src/gallery/Gallery"', '"@gen/ui/gallery"')

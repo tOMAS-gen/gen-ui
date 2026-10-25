@@ -28,6 +28,7 @@ import {
   Layers,
   LayoutDashboard,
   Lock,
+  Mail,
   Moon,
   Package,
   Settings,
@@ -302,6 +303,7 @@ const screenIcons = {
   "inventory-dashboard": Package,
   records: Users,
   settings: Settings,
+  email: Mail,
 };
 
 function CatalogNavigation({
@@ -349,7 +351,7 @@ function CatalogNavigation({
           active={route.page === "components"}
         />
       </NavSection>
-      {(["Acceso", "Ejemplos", "Aplicación"] as const)
+      {(["Acceso", "Ejemplos", "Aplicación", "Correo"] as const)
         .filter((group) => matching.some((item) => item.group === group))
         .map((group) => (
           <NavSection key={group} title={group}>

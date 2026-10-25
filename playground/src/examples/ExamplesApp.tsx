@@ -4,6 +4,7 @@ import { ProjectsExample } from "./ProjectsExample";
 import { AdminPanelExample } from "./AdminPanelExample";
 import { RecordsExample } from "./RecordsExample";
 import { SettingsExample } from "./SettingsExample";
+import { EmailExamples } from "./EmailExamples";
 import "./examples.css";
 
 /** Montar dentro de GenUIProvider, con styles.css y el tema UI importados. */
@@ -25,6 +26,8 @@ export function ExamplesApp({
       return <RecordsExample {...props} />;
     case "settings":
       return <SettingsExample {...props} />;
+    case "email":
+      return <EmailExamples />;
     case "signup":
     case "recovery":
     case "login":

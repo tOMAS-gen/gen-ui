@@ -49,6 +49,39 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 Íconos: `import { Server, Globe } from "@gen/ui/icons"` (Material Symbols Outlined en SVG, sin fuentes).
 Tailwind (opcional): `presets: [require("@gen/ui/tailwind-preset")]`.
 
+## Correos (`@gen/ui/email`)
+
+Piezas para armar correos con la marca de cada plataforma, hechas con [React Email](https://react.email). Los
+clientes de correo no entienden variables CSS ni clases: los temas son valores fijos (`emailThemes`) y los estilos
+van en línea. Necesitan `react-email` en la app que arma los correos (dependencia par opcional; las apps que solo
+usan la interfaz no lo instalan).
+
+```tsx
+import { render, toPlainText } from "react-email";
+import { EmailButton, EmailHeading, EmailLayout, EmailText } from "@gen/ui/email";
+
+const html = await render(
+  <EmailLayout marca="gen" preview="Te invitaron al panel de ›gen">
+    <EmailHeading>Te invitaron al panel</EmailHeading>
+    <EmailText>Para entrar, creá tu contraseña.</EmailText>
+    <EmailButton href={enlace}>Crear contraseña</EmailButton>
+  </EmailLayout>,
+);
+const text = toPlainText(html);
+```
+
+| Pieza | Para qué |
+| --- | --- |
+| `EmailLayout` (`marca`, `preview`) | Estructura: logotipo de texto (`›gen`, `›genstock`, `›genwork`; `›genui` en la galería), tarjeta y aviso "Este es un correo automático, no lo respondas." al pie |
+| `EmailHeading` | Título, uno por correo |
+| `EmailText` (`muted`) | Párrafo; `muted` para aclaraciones |
+| `EmailButton` (`href`) | Acción principal (también se ve en Outlook) |
+| `EmailCode` | Códigos y enlaces para copiar a mano |
+| `EmailDivider` | Separador |
+
+Temas: `ui` (la identidad de gen-ui, la que usa la galería), `gen`, `genstock` y `genwork` (cada producto usa el
+suyo). Vista previa: pantalla **Correos** del catálogo (`npm run dev`, `?screen=email`), con el tema `ui`.
+
 ## Tema UI
 
 Importá `@gen/ui/themes/ui.css` después de los estilos compartidos. El color principal es `#F97316`.

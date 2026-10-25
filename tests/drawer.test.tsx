@@ -96,7 +96,8 @@ it("el drawer móvil retiene el foco después de filtrar y lo devuelve al cerrar
   fireEvent.click(trigger);
   const drawer = screen.getByRole("dialog", { name: "Menú" });
   expect(document.body.style.overflow).toBe("hidden");
-  const last = within(drawer).getByRole("link", { name: "Configuración" });
+  // El último enlace del menú, sea cual sea la última pantalla del catálogo.
+  const last = within(drawer).getAllByRole("link").at(-1)!;
   last.focus();
   fireEvent.keyDown(last, { key: "Tab" });
   expect(document.activeElement).toBe(

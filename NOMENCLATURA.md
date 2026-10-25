@@ -30,6 +30,8 @@ necesita algo que no está acá, primero se agrega a gen-ui y después se usa.
 | Avisos flotantes | `useToast` / `showToast` | `.toast-stack` | dos sistemas → uno |
 | Código de verificación | `OtpInput` | `.otp` | — (nuevo) |
 | Acceso | `AuthLayout`, `AuthSplit`, `GoogleButton` | `.login-wrap`, `.auth-card`, `.auth-split*` | `.login-card` |
+| Correo (estructura) | `EmailLayout` (`@gen/ui/email`) | — (estilos en línea) | — (nuevo) |
+| Correo (contenido) | `EmailHeading`, `EmailText`, `EmailButton`, `EmailCode`, `EmailDivider` | — (estilos en línea) | — (nuevo) |
 
 ## Props
 
