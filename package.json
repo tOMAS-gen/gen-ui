@@ -13,6 +13,7 @@
   "exports": {
     ".": "./src/index.ts",
     "./icons": "./src/components/icons.tsx",
+    "./email": "./src/email/index.ts",
     "./styles.css": "./src/styles/index.css",
     "./themes/*": "./src/themes/*",
     "./tailwind-preset": {
@@ -43,7 +44,8 @@
   },
   "peerDependencies": {
     "react": ">=19",
-    "react-dom": ">=19"
+    "react-dom": ">=19",
+    "react-email": ">=6.11.1"
   },
   "devDependencies": {
     "@testing-library/react": "^16.3.0",
@@ -54,6 +56,7 @@
     "jsdom": "^26.1.0",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
+    "react-email": "6.11.1",
     "typescript": "^5.8.0",
     "vite": "^7.0.0",
     "vitest": "^3.1.0"
@@ -61,5 +64,13 @@
   "allowScripts": {
     "esbuild": true,
     "fsevents": true
+  },
+  "peerDependenciesMeta": {
+    "react-email": {
+      "optional": true
+    }
+  },
+  "overrides": {
+    "@react-email/render": "2.1.0"
   }
 }
