@@ -1,3 +1,4 @@
+/** @jsxRuntime automatic */
 import { Hr } from "react-email";
 import { useEmailTheme } from "./EmailLayout";
 

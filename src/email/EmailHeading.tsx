@@ -1,3 +1,4 @@
+/** @jsxRuntime automatic */
 import type { ReactNode } from "react";
 import { Heading } from "react-email";
 import { useEmailTheme } from "./EmailLayout";

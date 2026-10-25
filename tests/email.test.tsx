@@ -140,6 +140,17 @@ describe("correo de ejemplo de la galería", () => {
   });
 });
 
+describe("compilación en la app", () => {
+  it("cada .tsx de src/email declara JSX automático: tsx y esbuild compilan node_modules sin el tsconfig de la app", () => {
+    const dir = path.resolve(__dirname, "../src/email");
+    const sinPragma = readdirSync(dir)
+      .filter((nombre) => nombre.endsWith(".tsx"))
+      .filter((nombre) => !readFileSync(path.join(dir, nombre), "utf8").startsWith("/** @jsxRuntime automatic */"));
+
+    expect(sinPragma).toEqual([]);
+  });
+});
+
 describe("dependencias", () => {
   it("fuera de src/email nada importa react-email: las apps que solo usan la interfaz no lo necesitan", () => {
     const raiz = path.resolve(__dirname, "../src");
