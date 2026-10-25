@@ -1,3 +1,4 @@
+/** @jsxRuntime automatic */
 import { createContext, useContext, type ReactNode } from "react";
 import { Body, Container, Head, Html, Preview, Section, Text } from "react-email";
 import { emailFont, emailThemes, type EmailBrand, type EmailTheme } from "./themes";
