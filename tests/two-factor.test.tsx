@@ -111,7 +111,7 @@ describe("BackupCodes", () => {
     render(<BackupCodes codes={CODIGOS} />);
 
     expect(screen.getAllByRole("listitem").map((li) => li.textContent)).toEqual(CODIGOS);
-    expect(screen.getByText(/se muestran una sola vez/)).toBeTruthy();
+    expect(screen.getByText(/Se muestran una sola vez/)).toBeTruthy();
   });
 
   it("copia todos los códigos juntos", async () => {

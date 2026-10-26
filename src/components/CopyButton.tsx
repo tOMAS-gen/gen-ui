@@ -43,7 +43,13 @@ export function CopyButton({
       onClick={copiar}
       {...props}
     >
-      <span aria-live="polite">{estado === "copiado" ? copiedLabel : estado === "error" ? "No se pudo copiar" : label}</span>
+      {/* El texto más largo de los dos, invisible, reserva el ancho: el botón no salta al cambiar a "Copiado". */}
+      <span className="copy-button-label">
+        <span aria-live="polite">{estado === "copiado" ? copiedLabel : estado === "error" ? "No se pudo copiar" : label}</span>
+        <span className="copy-button-sizer" aria-hidden="true">
+          {label.length >= copiedLabel.length ? label : copiedLabel}
+        </span>
+      </span>
     </Button>
   );
 }

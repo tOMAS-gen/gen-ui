@@ -41,10 +41,10 @@ export function BackupCodes({
   return (
     <div className={cx("backup-codes", className)}>
       <InlineAlert tone="warning">
-        Guardalos en un lugar seguro: se muestran una sola vez. Cada código sirve para entrar una vez si no tenés la app
-        a mano.
+        Se muestran una sola vez. Cada código sirve para entrar una vez sin la app.
       </InlineAlert>
-      <ol className="backup-codes-list">
+      {/* `role="list"`: sin viñetas, Safari deja de anunciarla como lista. */}
+      <ol className="backup-codes-list" role="list">
         {codes.map((code) => (
           <li key={code}>{code}</li>
         ))}

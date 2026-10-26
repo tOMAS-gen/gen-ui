@@ -1,4 +1,14 @@
-/* gen-ui — dos pasos: QR de la app de autenticación y códigos de respaldo. */
+/* gen-ui — dos pasos: QR de la app de autenticación, códigos de respaldo y botón de copiar. */
+
+.copy-button-label {
+  display: inline-grid;
+}
+.copy-button-label > * {
+  grid-area: 1 / 1;
+}
+.copy-button-sizer {
+  visibility: hidden;
+}
 
 .qr-code {
   display: flex;

@@ -305,17 +305,20 @@ export function Gallery({ heading = "Componentes", showThemeToggle = true }: { h
       <Section id="dos-pasos" title="Dos pasos">
         <div className="gallery-grid">
           <div className="gallery-stack">
-            <span className="field-label">Escaneá el código con la app de autenticación</span>
+            <h3 className="gallery-subtitle">1. Escaneá el código con la app de autenticación</h3>
             <QrCode value={OTP_URI} secret={OTP_SECRET} />
           </div>
           <div className="gallery-stack">
-            <span className="field-label">Códigos de respaldo</span>
+            <h3 className="gallery-subtitle">2. Guardá los códigos de respaldo</h3>
             <BackupCodes codes={BACKUP_CODES} heading="gen UI · persona@ejemplo.com" fileName="gen-ui-codigos-de-respaldo.txt" />
           </div>
         </div>
-        <Row>
-          <CopyButton text="https://ejemplo.com/invitacion" label="Copiar enlace" />
-        </Row>
+        <div className="gallery-stack">
+          <h3 className="gallery-subtitle">Copiar al portapapeles</h3>
+          <Row>
+            <CopyButton text="https://ejemplo.com/invitacion" label="Copiar enlace" />
+          </Row>
+        </div>
       </Section>
 
       <Section id="navegacion" title="Navegación">

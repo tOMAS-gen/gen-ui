@@ -32,13 +32,15 @@ export function QrCode({
 }: {
   value: string;
   secret?: string;
-  /** Lado en píxeles. */
+  /** Lado aproximado en píxeles: se redondea para que cada módulo mida un número entero de píxeles. */
   size?: number;
   label?: string;
   className?: string;
 }) {
   const matriz = useMemo(() => qrMatrix(value), [value]);
   const lado = matriz.length + MARGEN * 2;
+  // Píxeles enteros por módulo: con módulos de ancho desparejo el QR se ve borroso (se lee igual, pero peor).
+  const pixeles = Math.max(1, Math.round(size / lado)) * lado;
   const d = useMemo(
     () =>
       matriz
@@ -54,8 +56,8 @@ export function QrCode({
         role="img"
         aria-label={label}
         viewBox={`0 0 ${lado} ${lado}`}
-        width={size}
-        height={size}
+        width={pixeles}
+        height={pixeles}
         shapeRendering="crispEdges"
       >
         <rect width={lado} height={lado} fill="#fff" />

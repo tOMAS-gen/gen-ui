@@ -12,6 +12,11 @@
   font-weight: 600;
   margin: 0;
 }
+.gallery-subtitle {
+  font-size: 13px;
+  font-weight: 600;
+  margin: 0;
+}
 .gallery-row {
   display: flex;
   flex-wrap: wrap;
