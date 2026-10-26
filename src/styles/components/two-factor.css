@@ -1,0 +1,54 @@
+/* gen-ui — dos pasos: QR de la app de autenticación y códigos de respaldo. */
+
+.qr-code {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-4);
+}
+/* El QR va oscuro sobre blanco también en el tema oscuro: las cámaras leen mal el invertido. */
+.qr-code-image {
+  flex-shrink: 0;
+  max-width: 100%;
+  height: auto;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  background: var(--color-white);
+}
+.qr-code-secret {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-2);
+  min-width: 0;
+}
+.qr-code-key {
+  font-family: var(--font-mono-stack);
+  font-size: var(--text-sm);
+  letter-spacing: 0.06em;
+  overflow-wrap: anywhere;
+}
+
+.backup-codes {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+.backup-codes-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(11ch, 1fr));
+  gap: var(--space-2) var(--space-4);
+  margin: 0;
+  padding: var(--space-3) var(--space-4);
+  list-style: none;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  background: var(--bg);
+  font-family: var(--font-mono-stack);
+  font-size: var(--text-sm);
+}
+.backup-codes-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}

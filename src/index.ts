@@ -22,6 +22,11 @@ export * from "./components/Combobox";
 export * from "./components/ColorPicker";
 export * from "./components/ColorField";
 
+// Dos pasos
+export * from "./components/CopyButton";
+export * from "./components/QrCode";
+export * from "./components/BackupCodes";
+
 // Feedback
 export * from "./components/Toast";
 export * from "./components/Dialog";

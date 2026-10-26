@@ -160,6 +160,7 @@ Cada pantalla se puede compartir por URL, por ejemplo:
 | --- | --- |
 | Base | `Button`, `ButtonLink`, `IconButton`, `LinkButton`, `Spinner`, `Card`, `CardGrid`, `InteractiveCard`, `Badge`, `StatusPill`, `Tag`, `ColorChip`, `ColorDot`, `Avatar`, `Kbd`, `Divider`, `BrandLogo` |
 | Formularios | `Field`, `Input`, `PasswordInput`, `Textarea`, `Select`, `Checkbox`, `Radio`, `Switch`, `SearchInput`, `DatePicker`, `OtpInput`, `Combobox`, `ColorPicker`, `ColorField`, `CharLimit` |
+| Dos pasos | `QrCode`, `BackupCodes`, `CopyButton` |
 | Feedback | `ToastProvider`/`useToast`/`showToast`, `InlineAlert`, `Dialog`, `showConfirm`, `PromptDialog` (`RenameDialog`), `Skeleton`, `EmptyState`, `ProgressBar`, `ProgressRing` |
 | Navegación | `AppShell`, `SidebarNav`, `NavSection`, `NavItem`, `NavGroup`, `NavSubItem`, `SidebarProfile`, `SidebarLogout`, `Tabs`, `RouteTabs`, `SegmentedControl`, `ViewSwitch`, `Breadcrumbs`, `Pagination`, `Menu` |
 | Página y datos | `PageHeader`, `PageStack`, `SectionPanel`, `SectionLabel`, `RecordList`, `RecordRow`, `DescriptionList`, `StatsBar`, `StatCard`, `Toolbar`, `ToolbarFilterField`, `FilterPill`, `DataTable` |

@@ -29,6 +29,9 @@ necesita algo que no está acá, primero se agrega a gen-ui y después se usa.
 | Diálogo de texto | `PromptDialog` | `.dialog` | `RenameDialog` (alias conservado) |
 | Avisos flotantes | `useToast` / `showToast` | `.toast-stack` | dos sistemas → uno |
 | Código de verificación | `OtpInput` | `.otp` | — (nuevo) |
+| QR de la app de autenticación | `QrCode` | `.qr-code` | — (nuevo) |
+| Códigos de respaldo | `BackupCodes` | `.backup-codes` | — (nuevo) |
+| Copiar al portapapeles | `CopyButton` | `.btn` | — (nuevo) |
 | Acceso | `AuthLayout`, `AuthSplit`, `GoogleButton` | `.login-wrap`, `.auth-card`, `.auth-split*` | `.login-card` |
 | Correo (estructura) | `EmailLayout` (`@gen/ui/email`) | — (estilos en línea) | — (nuevo) |
 | Correo (contenido) | `EmailHeading`, `EmailText`, `EmailButton`, `EmailCode`, `EmailDivider` | — (estilos en línea) | — (nuevo) |
