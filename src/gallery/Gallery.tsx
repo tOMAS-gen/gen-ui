@@ -3,6 +3,7 @@
 import { useState, type ReactNode } from "react";
 import {
   Avatar,
+  BackupCodes,
   Badge,
   Breadcrumbs,
   Button,
@@ -13,6 +14,7 @@ import {
   ColorDot,
   ColorField,
   Combobox,
+  CopyButton,
   DataTable,
   DatePicker,
   DescriptionList,
@@ -36,6 +38,7 @@ import {
   ProgressBar,
   ProgressRing,
   PromptDialog,
+  QrCode,
   Radio,
   RecordList,
   RecordRow,
@@ -71,6 +74,11 @@ import {
   Server,
   Trash2,
 } from "../components/icons";
+
+/** Datos de ejemplo de los dos pasos (clave de demostración de RFC 6238, no es de nadie). */
+const OTP_SECRET = "JBSWY3DPEHPK3PXP";
+const OTP_URI = `otpauth://totp/gen%20UI:persona%40ejemplo.com?secret=${OTP_SECRET}&issuer=gen%20UI`;
+const BACKUP_CODES = ["7f3k-q9xm", "2hd8-vw4n", "p6ra-3jzc", "m9tb-x2ke", "4wqs-h7dl", "c8nv-5ryu", "j2ef-9mpa", "u5gx-6kbt"];
 
 /** Bloque titulado de la galería. */
 function Section({ id, title, children }: { id: string; title: string; children: ReactNode }) {
@@ -291,6 +299,25 @@ export function Gallery({ heading = "Componentes", showThemeToggle = true }: { h
             />
             {picked && <span className="muted">Elegido: {picked}</span>}
           </div>
+        </div>
+      </Section>
+
+      <Section id="dos-pasos" title="Dos pasos">
+        <div className="gallery-grid">
+          <div className="gallery-stack">
+            <h3 className="gallery-subtitle">1. Escaneá el código con la app de autenticación</h3>
+            <QrCode value={OTP_URI} secret={OTP_SECRET} />
+          </div>
+          <div className="gallery-stack">
+            <h3 className="gallery-subtitle">2. Guardá los códigos de respaldo</h3>
+            <BackupCodes codes={BACKUP_CODES} heading="gen UI · persona@ejemplo.com" fileName="gen-ui-codigos-de-respaldo.txt" />
+          </div>
+        </div>
+        <div className="gallery-stack">
+          <h3 className="gallery-subtitle">Copiar al portapapeles</h3>
+          <Row>
+            <CopyButton text="https://ejemplo.com/invitacion" label="Copiar enlace" />
+          </Row>
         </div>
       </Section>
 
