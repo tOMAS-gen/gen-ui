@@ -17,9 +17,14 @@ import { AlertCircle, Eye, EyeOff, Search, X } from "./icons";
 import { CharLimit } from "./CharLimit";
 import { useLabels } from "./Provider";
 
-type FieldContextValue = { id: string; describedBy?: string; invalid: boolean };
+export type FieldContextValue = { id: string; describedBy?: string; invalid: boolean };
 
 const FieldContext = createContext<FieldContextValue | null>(null);
+
+/** Datos del `<Field>` que envuelve al control (o `null` si está suelto), para controles compuestos como `MoneyInput`. */
+export function useFieldContext(): FieldContextValue | null {
+  return useContext(FieldContext);
+}
 
 /** Props ARIA que un control hereda del `<Field>` que lo envuelve. */
 function useFieldProps(id?: string, invalid?: boolean) {

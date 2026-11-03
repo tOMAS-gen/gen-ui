@@ -1,0 +1,130 @@
+/* gen-ui — Timeline: línea de tiempo vertical de eventos, agrupada por día. */
+
+.timeline {
+  display: grid;
+  gap: var(--space-4);
+  min-width: 0;
+}
+.timeline-groups,
+.timeline-list {
+  display: grid;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.timeline-groups {
+  gap: var(--space-5);
+}
+/* Rótulo de sección: 11/700 en mayúsculas con 1.2px de tracking (DESIGN.md). */
+.timeline-day {
+  margin: 0 0 var(--space-3);
+  color: var(--muted);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+}
+
+.timeline-item {
+  position: relative;
+  display: grid;
+  grid-template-columns: 24px minmax(0, 1fr);
+  column-gap: var(--space-3);
+  padding-bottom: var(--space-4);
+}
+.timeline-item:last-child {
+  padding-bottom: 0;
+}
+.timeline-item:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 4px;
+  border-radius: var(--radius-sm);
+}
+/* El hilo que une un marcador con el siguiente. */
+.timeline-item::before {
+  content: "";
+  position: absolute;
+  top: 28px;
+  bottom: 4px;
+  left: 11px;
+  width: 2px;
+  background: var(--border);
+}
+.timeline-item:last-child::before {
+  display: none;
+}
+
+.timeline-marker {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  border-radius: var(--radius-control);
+  background: var(--hover-soft);
+  color: var(--muted);
+}
+.timeline-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: currentColor;
+}
+.timeline-success {
+  background: var(--color-success-bg);
+  color: var(--color-success-text);
+}
+.timeline-warning {
+  background: var(--color-warning-bg);
+  color: var(--color-warning-text);
+}
+.timeline-danger {
+  background: var(--color-danger-bg);
+  color: var(--color-danger-text);
+}
+.timeline-info {
+  background: var(--color-info-bg);
+  color: var(--color-info-text);
+}
+.timeline-accent {
+  background: var(--accent-soft);
+  color: var(--accent-text);
+}
+
+.timeline-body {
+  display: grid;
+  gap: 2px;
+  min-width: 0;
+  padding-top: 2px;
+}
+.timeline-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-1) var(--space-3);
+}
+.timeline-title {
+  min-width: 0;
+  font-size: var(--text-sm);
+  font-weight: 600;
+  overflow-wrap: anywhere;
+}
+.timeline-time {
+  color: var(--muted);
+  font-size: var(--text-xs);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+.timeline-actor {
+  color: var(--muted);
+  font-size: 13px;
+}
+.timeline-detail {
+  margin-top: var(--space-1);
+  font-size: 13px;
+  overflow-wrap: anywhere;
+}
+.timeline-more {
+  justify-self: start;
+}

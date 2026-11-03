@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, type ReactNode } from "react";
+import { useEffect, useState, type ReactNode } from "react";
 import {
   Avatar,
   BackupCodes,
@@ -22,6 +22,7 @@ import {
   Divider,
   EmptyState,
   Field,
+  FileUpload,
   FilterPill,
   GoogleButton,
   IconButton,
@@ -31,6 +32,7 @@ import {
   Kbd,
   LinkButton,
   Menu,
+  MoneyInput,
   OtpInput,
   PageHeader,
   Pagination,
@@ -54,15 +56,19 @@ import {
   Tag,
   Textarea,
   ThemeToggle,
+  Timeline,
   Toolbar,
   ToolbarFilterField,
   showConfirm,
   useToast,
 } from "../index";
 import {
+  AlertCircle,
+  CheckCircle,
   Cloud,
   Cpu,
   Database,
+  FileText,
   Globe,
   LayoutGrid,
   List,
@@ -73,12 +79,39 @@ import {
   RefreshCw,
   Server,
   Trash2,
+  Upload,
 } from "../components/icons";
 
 /** Datos de ejemplo de los dos pasos (clave de demostración de RFC 6238, no es de nadie). */
 const OTP_SECRET = "JBSWY3DPEHPK3PXP";
 const OTP_URI = `otpauth://totp/gen%20UI:persona%40ejemplo.com?secret=${OTP_SECRET}&issuer=gen%20UI`;
 const BACKUP_CODES = ["7f3k-q9xm", "2hd8-vw4n", "p6ra-3jzc", "m9tb-x2ke", "4wqs-h7dl", "c8nv-5ryu", "j2ef-9mpa", "u5gx-6kbt"];
+
+/** Archivo de muestra con el peso pedido (no tiene contenido real). */
+function sampleFile(name: string, type: string, size: number): File {
+  const file = new File([""], name, { type });
+  Object.defineProperty(file, "size", { value: size });
+  return file;
+}
+
+/** Momento fijo de los ejemplos de la línea de tiempo: así se ve igual en el servidor y en el navegador. */
+const TIMELINE_NOW = new Date("2026-11-03T15:00:00Z");
+const TIMELINE_ZONE = "America/Argentina/Buenos_Aires";
+const TIMELINE_TYPES = {
+  pago: { icon: CheckCircle, tone: "success" },
+  documento: { icon: FileText, tone: "info" },
+  cambio: { icon: Pencil, tone: "accent" },
+  alerta: { icon: AlertCircle, tone: "warning" },
+} as const;
+const TIMELINE_EVENTS = [
+  { id: "e1", at: "2026-11-03T14:52:00Z", actor: "Marta López", title: "Aprobó el pago de noviembre", detail: "Transferencia de US$ 49,00", type: "pago" },
+  { id: "e2", at: "2026-11-03T12:10:00Z", actor: "Cliente de ejemplo", title: "Subió el comprobante", detail: "comprobante-noviembre.pdf · 1,2 MB", type: "documento" },
+  { id: "e3", at: "2026-11-02T19:40:00Z", actor: "Julián Sosa", title: "Cambió el plan", detail: "Plan: Chico → Grande", type: "cambio" },
+  { id: "e4", at: "2026-11-02T13:05:00Z", actor: "Sistema", title: "Aviso de vencimiento enviado", type: "alerta" },
+  { id: "e5", at: "2026-10-30T13:30:00Z", actor: "Julián Sosa", title: "Dio de alta al cliente", type: "cambio" },
+  { id: "e6", at: "2026-10-29T17:15:00Z", actor: "Marta López", title: "Subió los datos fiscales", type: "documento" },
+  { id: "e7", at: "2026-10-28T11:00:00Z", actor: "Sistema", title: "Cuenta creada" },
+];
 
 /** Bloque titulado de la galería. */
 function Section({ id, title, children }: { id: string; title: string; children: ReactNode }) {
@@ -133,6 +166,21 @@ export function Gallery({ heading = "Componentes", showThemeToggle = true }: { h
   const [picked, setPicked] = useState<string | null>(null);
   const [checked, setChecked] = useState(true);
   const [on, setOn] = useState(true);
+  const [price, setPrice] = useState<number | null>(4900);
+  const [priceUsd, setPriceUsd] = useState<number | null>(null);
+  const [receipt, setReceipt] = useState<File[]>([]);
+  const [photos, setPhotos] = useState<File[]>(() => [
+    sampleFile("remito-1042.pdf", "application/pdf", 1_258_291),
+    sampleFile("foto-mostrador.jpg", "image/jpeg", 3_400_000),
+  ]);
+  const [upload, setUpload] = useState<number | undefined>(undefined);
+
+  // Simula una subida: el avance sube de a poco y al llegar a 100 vuelve al estado inicial.
+  useEffect(() => {
+    if (upload === undefined) return;
+    const timer = setTimeout(() => setUpload(upload >= 100 ? undefined : Math.min(100, upload + 6)), upload >= 100 ? 700 : 500);
+    return () => clearTimeout(timer);
+  }, [upload]);
 
   const matches = SERVERS.filter((s) => s.name.includes(query.toLowerCase()));
 
@@ -298,6 +346,58 @@ export function Gallery({ heading = "Componentes", showThemeToggle = true }: { h
               placeholder="gen-node…"
             />
             {picked && <span className="muted">Elegido: {picked}</span>}
+          </div>
+        </div>
+      </Section>
+
+      <Section id="importes" title="Importes">
+        <div className="gallery-grid">
+          <Field label="Precio mensual" hint="Se guarda en centavos: $ 49,00 es 4900.">
+            <MoneyInput value={price} onChange={setPrice} min={100} max={10_000_000} />
+          </Field>
+          <Field label="Precio en dólares" hint="Mínimo US$ 5,00." optional>
+            <MoneyInput value={priceUsd} onChange={setPriceUsd} currency="USD" min={500} />
+          </Field>
+          <Field label="Descuento" error="El descuento no puede superar el precio.">
+            <MoneyInput defaultValue={1_250_000} />
+          </Field>
+          <Field label="Importe cobrado">
+            <MoneyInput defaultValue={123456} readOnly />
+          </Field>
+          <Field label="Importe bloqueado">
+            <MoneyInput defaultValue={250000} disabled />
+          </Field>
+        </div>
+        <span className="muted">Valor actual: {price === null ? "vacío" : `${price} centavos`}</span>
+      </Section>
+
+      <Section id="archivos" title="Subir archivos">
+        <div className="gallery-grid">
+          <Field label="Comprobante de pago">
+            <FileUpload accept=".pdf,image/png,image/jpeg" maxSize={5 * 1024 * 1024} value={receipt} onChange={setReceipt} />
+          </Field>
+          <Field label="Fotos y remitos" optional>
+            <FileUpload multiple maxFiles={5} accept=".pdf,image/*" maxSize={10 * 1024 * 1024} value={photos} onChange={setPhotos} />
+          </Field>
+          <Field label="Con error del servidor">
+            <FileUpload error="No pudimos subir el archivo. Probá de nuevo." accept=".pdf" />
+          </Field>
+          <Field label="Deshabilitado">
+            <FileUpload disabled accept=".pdf" />
+          </Field>
+          <div className="gallery-stack">
+            <Field label="Subiendo">
+              <FileUpload
+                accept=".zip"
+                defaultValue={[sampleFile("version-2.4.0.zip", "application/zip", 48_000_000)]}
+                progress={upload}
+              />
+            </Field>
+            <Row>
+              <Button size="sm" icon={<Upload size={16} />} disabled={upload !== undefined} onClick={() => setUpload(0)}>
+                Simular subida
+              </Button>
+            </Row>
           </div>
         </div>
       </Section>
@@ -472,6 +572,30 @@ export function Gallery({ heading = "Componentes", showThemeToggle = true }: { h
             <ProgressBar value={38} />
           </div>
         </Row>
+      </Section>
+
+      <Section id="historial" title="Línea de tiempo">
+        <div className="gallery-grid">
+          <div className="gallery-stack">
+            <h3 className="gallery-subtitle">Historial de un cliente (relativo, de a 4)</h3>
+            <Timeline events={TIMELINE_EVENTS} types={TIMELINE_TYPES} pageSize={4} now={TIMELINE_NOW} timeZone={TIMELINE_ZONE} />
+          </div>
+          <div className="gallery-stack">
+            <h3 className="gallery-subtitle">Con hora exacta, del más viejo al más nuevo</h3>
+            <Timeline
+              events={TIMELINE_EVENTS.slice(0, 4)}
+              types={TIMELINE_TYPES}
+              timeFormat="absolute"
+              order="asc"
+              now={TIMELINE_NOW}
+              timeZone={TIMELINE_ZONE}
+            />
+          </div>
+          <div className="gallery-stack">
+            <h3 className="gallery-subtitle">Sin eventos</h3>
+            <Timeline events={[]} emptyTitle="Sin accesos de soporte" emptyDescription="Nadie entró a ver esta cuenta." />
+          </div>
+        </div>
       </Section>
 
       <Section id="feedback" title="Carga, vacío y diálogos">

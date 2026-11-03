@@ -202,6 +202,46 @@ textarea:focus {
   height: 32px;
 }
 
+/* ---- MoneyInput: importe con símbolo a la izquierda y código de moneda a la derecha ---- */
+.money-input {
+  display: grid;
+  gap: 6px;
+  min-width: 0;
+}
+.money-input-field {
+  min-height: 40px;
+  padding-right: 52px;
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+.money-input-ars .money-input-field {
+  padding-left: 32px;
+}
+.money-input-usd .money-input-field {
+  padding-left: 44px;
+}
+.money-input-symbol {
+  font-size: 13px;
+  font-weight: 600;
+}
+.money-input-code {
+  position: absolute;
+  right: 10px;
+  color: var(--muted);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.6px;
+  pointer-events: none;
+}
+.money-input-field:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+.money-input-field:read-only:not(:disabled) {
+  background: transparent;
+  border-style: dashed;
+}
+
 /* ---- Checkbox y radio (nativos, con accent de marca) ---- */
 .check {
   display: inline-flex;

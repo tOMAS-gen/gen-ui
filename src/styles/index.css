@@ -28,3 +28,5 @@
 @import "./components/auth.css";
 @import "./components/auth-split.css";
 @import "./components/two-factor.css";
+@import "./components/file-upload.css";
+@import "./components/timeline.css";
