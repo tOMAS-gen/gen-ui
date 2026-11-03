@@ -159,12 +159,46 @@ Cada pantalla se puede compartir por URL, por ejemplo:
 | Grupo | Componentes |
 | --- | --- |
 | Base | `Button`, `ButtonLink`, `IconButton`, `LinkButton`, `Spinner`, `Card`, `CardGrid`, `InteractiveCard`, `Badge`, `StatusPill`, `Tag`, `ColorChip`, `ColorDot`, `Avatar`, `Kbd`, `Divider`, `BrandLogo` |
-| Formularios | `Field`, `Input`, `PasswordInput`, `Textarea`, `Select`, `Checkbox`, `Radio`, `Switch`, `SearchInput`, `DatePicker`, `OtpInput`, `Combobox`, `ColorPicker`, `ColorField`, `CharLimit` |
+| Formularios | `Field`, `Input`, `PasswordInput`, `Textarea`, `Select`, `Checkbox`, `Radio`, `Switch`, `SearchInput`, `DatePicker`, `OtpInput`, `Combobox`, `ColorPicker`, `ColorField`, `CharLimit`, `MoneyInput`, `FileUpload` |
 | Dos pasos | `QrCode`, `BackupCodes`, `CopyButton` |
 | Feedback | `ToastProvider`/`useToast`/`showToast`, `InlineAlert`, `Dialog`, `showConfirm`, `PromptDialog` (`RenameDialog`), `Skeleton`, `EmptyState`, `ProgressBar`, `ProgressRing` |
 | Navegación | `AppShell`, `SidebarNav`, `NavSection`, `NavItem`, `NavGroup`, `NavSubItem`, `SidebarProfile`, `SidebarLogout`, `Tabs`, `RouteTabs`, `SegmentedControl`, `ViewSwitch`, `Breadcrumbs`, `Pagination`, `Menu` |
-| Página y datos | `PageHeader`, `PageStack`, `SectionPanel`, `SectionLabel`, `RecordList`, `RecordRow`, `DescriptionList`, `StatsBar`, `StatCard`, `Toolbar`, `ToolbarFilterField`, `FilterPill`, `DataTable` |
+| Página y datos | `PageHeader`, `PageStack`, `SectionPanel`, `SectionLabel`, `RecordList`, `RecordRow`, `DescriptionList`, `StatsBar`, `StatCard`, `Toolbar`, `ToolbarFilterField`, `FilterPill`, `DataTable`, `Timeline` |
 | Tema y acceso | `GenUIProvider`, `ThemeScript`, `useTheme`, `ThemeToggle`, `AuthLayout`, `AuthSplit`, `GoogleButton` |
+
+### Importes, archivos y línea de tiempo (0.5.0)
+
+```tsx
+// Importe: recibe y entrega centavos enteros, nunca flotantes.
+<Field label="Precio mensual" error={errorDelServidor}>
+  <MoneyInput value={centavos} onChange={setCentavos} currency="USD" min={500} max={10_000_000} />
+</Field>
+// Se escribe "1.234,56" (es-AR) y onChange recibe 123456. Con `name`, el <form> envía los centavos.
+// Helpers: parseMoney("1.234,56") → 123456, formatMoney(123456, "USD") → "US$ 1.234,56", moneyError(...).
+
+// Archivos: valida tipo y peso al elegirlos y muestra el error. No sube nada: entrega los File.
+<Field label="Comprobante">
+  <FileUpload
+    accept=".pdf,image/png,image/jpeg"
+    maxSize={5 * 1024 * 1024}
+    value={archivos}
+    onChange={setArchivos}
+    uploading={subiendo}
+    progress={avance} // 0–100; sin él, "Subiendo…" sin porcentaje
+    error={errorDelServidor}
+  />
+</Field>
+// `multiple` + `maxFiles` para varios. `onReject` recibe los rechazados con su mensaje.
+
+// Línea de tiempo: quién, qué y cuándo, agrupada por día.
+<Timeline
+  events={[{ id: "1", at: pago.creadoEn, actor: "Marta López", title: "Aprobó el pago", detail: "US$ 49,00", type: "pago" }]}
+  types={{ pago: { icon: CheckCircle, tone: "success" } }}
+  timeFormat="relative" // o "absolute"
+  pageSize={10}         // "Ver más" suma de a 10
+  timeZone="America/Argentina/Buenos_Aires"
+/>
+```
 
 Origen del CSS: `scripts/extract-genwork-css.py` registra qué rangos de `genwork/src/app/globals.css` se
 extrajeron para la v0.1.0.

@@ -18,6 +18,8 @@ export * from "./components/Field";
 export * from "./components/CharLimit";
 export * from "./components/DatePicker";
 export * from "./components/OtpInput";
+export * from "./components/MoneyInput";
+export * from "./components/FileUpload";
 export * from "./components/Combobox";
 export * from "./components/ColorPicker";
 export * from "./components/ColorField";
@@ -47,6 +49,7 @@ export * from "./components/Layout";
 export * from "./components/Stats";
 export * from "./components/Toolbar";
 export * from "./components/DataTable";
+export * from "./components/Timeline";
 export * from "./components/Theme";
 export * from "./components/Auth";
 

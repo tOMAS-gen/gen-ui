@@ -32,6 +32,9 @@ necesita algo que no está acá, primero se agrega a gen-ui y después se usa.
 | QR de la app de autenticación | `QrCode` | `.qr-code` | — (nuevo) |
 | Códigos de respaldo | `BackupCodes` | `.backup-codes` | — (nuevo) |
 | Copiar al portapapeles | `CopyButton` | `.btn` | — (nuevo) |
+| Importe con moneda | `MoneyInput` | `.money-input` | — (nuevo) |
+| Subir archivos | `FileUpload` | `.file-upload` | — (nuevo) |
+| Línea de tiempo | `Timeline` | `.timeline` | — (nuevo) |
 | Acceso | `AuthLayout`, `AuthSplit`, `GoogleButton` | `.login-wrap`, `.auth-card`, `.auth-split*` | `.login-card` |
 | Correo (estructura) | `EmailLayout` (`@gen/ui/email`) | — (estilos en línea) | — (nuevo) |
 | Correo (contenido) | `EmailHeading`, `EmailText`, `EmailButton`, `EmailCode`, `EmailDivider` | — (estilos en línea) | — (nuevo) |
