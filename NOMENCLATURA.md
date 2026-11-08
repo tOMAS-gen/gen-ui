@@ -35,6 +35,8 @@ necesita algo que no está acá, primero se agrega a gen-ui y después se usa.
 | Importe con moneda | `MoneyInput` | `.money-input` | — (nuevo) |
 | Subir archivos | `FileUpload` | `.file-upload` | — (nuevo) |
 | Línea de tiempo | `Timeline` | `.timeline` | — (nuevo) |
+| Código en línea (hash, id, ruta) | `InlineCode` | `.code-inline` | `<code>` con `style` en línea |
+| Código en bloque (comando, payload) | `CodeBlock` | `.code-block` | `<pre>` con `style` en línea |
 | Acceso | `AuthLayout`, `AuthSplit`, `GoogleButton` | `.login-wrap`, `.auth-card`, `.auth-split*` | `.login-card` |
 | Correo (estructura) | `EmailLayout` (`@gen/ui/email`) | — (estilos en línea) | — (nuevo) |
 | Correo (contenido) | `EmailHeading`, `EmailText`, `EmailButton`, `EmailCode`, `EmailDivider` | — (estilos en línea) | — (nuevo) |
@@ -44,6 +46,7 @@ necesita algo que no está acá, primero se agrega a gen-ui y después se usa.
 - `variant` para la forma de un botón (`primary`, `outline`, `ghost`, `danger`); `tone` para el color de un
   estado (`neutral`, `success`, `warning`, `danger`, `info`, `accent`).
 - `label` / `ariaLabel` siempre explícitos en controles sin texto visible.
+- `Code` (sin sufijo) es el ícono de `@gen/ui/icons`; los componentes de código se llaman `InlineCode` y `CodeBlock`.
 - `icon` recibe un componente de `@gen/ui/icons`, nunca un nombre en texto.
 - Booleanos de estado en positivo: `loading`, `invalid`, `disabled`, `open`.
 
