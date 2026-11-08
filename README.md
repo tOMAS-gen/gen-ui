@@ -161,6 +161,7 @@ Cada pantalla se puede compartir por URL, por ejemplo:
 | Base | `Button`, `ButtonLink`, `IconButton`, `LinkButton`, `Spinner`, `Card`, `CardGrid`, `InteractiveCard`, `Badge`, `StatusPill`, `Tag`, `ColorChip`, `ColorDot`, `Avatar`, `Kbd`, `Divider`, `BrandLogo` |
 | Formularios | `Field`, `Input`, `PasswordInput`, `Textarea`, `Select`, `Checkbox`, `Radio`, `Switch`, `SearchInput`, `DatePicker`, `OtpInput`, `Combobox`, `ColorPicker`, `ColorField`, `CharLimit`, `MoneyInput`, `FileUpload` |
 | Dos pasos | `QrCode`, `BackupCodes`, `CopyButton` |
+| Código | `InlineCode`, `CodeBlock` |
 | Feedback | `ToastProvider`/`useToast`/`showToast`, `InlineAlert`, `Dialog`, `showConfirm`, `PromptDialog` (`RenameDialog`), `Skeleton`, `EmptyState`, `ProgressBar`, `ProgressRing` |
 | Navegación | `AppShell`, `SidebarNav`, `NavSection`, `NavItem`, `NavGroup`, `NavSubItem`, `SidebarProfile`, `SidebarLogout`, `Tabs`, `RouteTabs`, `SegmentedControl`, `ViewSwitch`, `Breadcrumbs`, `Pagination`, `Menu` |
 | Página y datos | `PageHeader`, `PageStack`, `SectionPanel`, `SectionLabel`, `RecordList`, `RecordRow`, `DescriptionList`, `StatsBar`, `StatCard`, `Toolbar`, `ToolbarFilterField`, `FilterPill`, `DataTable`, `Timeline` |
@@ -199,6 +200,33 @@ Cada pantalla se puede compartir por URL, por ejemplo:
   timeZone="America/Argentina/Buenos_Aires"
 />
 ```
+
+### Código: hashes, ids y comandos (0.6.0)
+
+```tsx
+// En línea: un valor técnico dentro de un texto. Siempre se pasa como string.
+<p>
+  Clave <InlineCode>firma-2026-11</InlineCode> activa.
+</p>
+
+// Un hash de 64 caracteres: se ve recortado ("9f86d081…b0f00a08"), el lector de pantalla lo lee entero,
+// "Ver completo" lo muestra entero y el botón copia siempre el valor completo.
+<InlineCode copy copyLabel="Copiar hash" maxChars={17}>{sha256}</InlineCode>
+
+// En bloque: un comando de varias líneas o un payload. Scrollea en su propio contenedor.
+<CodeBlock label="Cloud Shell" copy copyLabel="Copiar comando">
+  {comando}
+</CodeBlock>
+// `wrap` parte los renglones largos; `maxHeight` limita el alto. Sin `label` ni `copy` no hay encabezado.
+```
+
+- Usan la fuente monoespaciada del tema (`--font-mono-stack`, Roboto Mono) y los colores neutros: cambian solos
+  con la marca y con el modo oscuro. No hay resaltado de sintaxis ni dependencias nuevas.
+- `copy` es opcional. Al copiar, el botón cambia a «Copiado» (o el ícono, en línea) y se anuncia a los lectores de
+  pantalla; si el navegador no deja copiar, dice «No se pudo copiar». Los textos se cambian con `copyLabel` y
+  `copiedLabel`.
+- `CodeBlock` es una región con nombre (`label`, o «Código») y con foco, para scrollear con el teclado.
+- Helper: `shortenMiddle(valor, max)`. `IconButton` suma `size="sm"` (28 px, con el área táctil de 44 px).
 
 Origen del CSS: `scripts/extract-genwork-css.py` registra qué rangos de `genwork/src/app/globals.css` se
 extrajeron para la v0.1.0.

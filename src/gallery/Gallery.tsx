@@ -10,6 +10,7 @@ import {
   Card,
   CardGrid,
   Checkbox,
+  CodeBlock,
   ColorChip,
   ColorDot,
   ColorField,
@@ -27,6 +28,7 @@ import {
   GoogleButton,
   IconButton,
   InlineAlert,
+  InlineCode,
   Input,
   InteractiveCard,
   Kbd,
@@ -112,6 +114,25 @@ const TIMELINE_EVENTS = [
   { id: "e6", at: "2026-10-29T17:15:00Z", actor: "Marta López", title: "Subió los datos fiscales", type: "documento" },
   { id: "e7", at: "2026-10-28T11:00:00Z", actor: "Sistema", title: "Cuenta creada" },
 ];
+
+/** Valores de ejemplo de InlineCode y CodeBlock (el hash es el SHA-256 de "test"; la clave no existe). */
+const SAMPLE_HASH = "9f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b0b822cd15d6c15b0f00a08";
+const SAMPLE_KEY_ID = "projects/gen-ejemplo/locations/global/keyRings/actualizaciones/cryptoKeys/firma/cryptoKeyVersions/1";
+const SAMPLE_COMMAND = [
+  "gcloud kms asymmetric-sign \\",
+  "  --location=global \\",
+  "  --keyring=actualizaciones \\",
+  "  --key=firma \\",
+  "  --version=1 \\",
+  "  --digest-algorithm=sha256 \\",
+  "  --input-file=manifiesto.json \\",
+  "  --signature-file=manifiesto.sig",
+].join("\n");
+const SAMPLE_PAYLOAD = JSON.stringify(
+  { version: "2.4.0", sha256: SAMPLE_HASH, canal: "estable", publicadoEn: "2026-11-03T15:00:00Z" },
+  null,
+  2,
+);
 
 /** Bloque titulado de la galería. */
 function Section({ id, title, children }: { id: string; title: string; children: ReactNode }) {
@@ -418,6 +439,41 @@ export function Gallery({ heading = "Componentes", showThemeToggle = true }: { h
           <Row>
             <CopyButton text="https://ejemplo.com/invitacion" label="Copiar enlace" />
           </Row>
+        </div>
+      </Section>
+
+      <Section id="codigo" title="Código">
+        <div className="gallery-grid">
+          <div className="gallery-stack">
+            <h3 className="gallery-subtitle">En línea: dentro de un texto</h3>
+            <p className="muted">
+              La clave <InlineCode>firma-2026-11</InlineCode> firmó la versión 2.4.0.
+            </p>
+            <h3 className="gallery-subtitle">Hash recortado, con ver completo y copiar</h3>
+            <p className="muted">
+              SHA-256: <InlineCode copy copyLabel="Copiar hash" maxChars={17}>{SAMPLE_HASH}</InlineCode>
+            </p>
+            <h3 className="gallery-subtitle">Id de clave largo, sin recortar</h3>
+            <p className="muted">
+              <InlineCode copy copyLabel="Copiar id de clave">{SAMPLE_KEY_ID}</InlineCode>
+            </p>
+          </div>
+          <div className="gallery-stack">
+            <h3 className="gallery-subtitle">Bloque con copiar: comando de Cloud Shell</h3>
+            <CodeBlock label="Cloud Shell" copy copyLabel="Copiar comando">
+              {SAMPLE_COMMAND}
+            </CodeBlock>
+          </div>
+          <div className="gallery-stack">
+            <h3 className="gallery-subtitle">Bloque con alto máximo y renglones partidos</h3>
+            <CodeBlock label="manifiesto.json" copy wrap maxHeight={140}>
+              {SAMPLE_PAYLOAD}
+            </CodeBlock>
+          </div>
+          <div className="gallery-stack">
+            <h3 className="gallery-subtitle">Bloque simple, sin encabezado</h3>
+            <CodeBlock>{"npm install @gen/ui"}</CodeBlock>
+          </div>
         </div>
       </Section>
 

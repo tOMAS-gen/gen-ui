@@ -26,6 +26,7 @@ export * from "./components/ColorField";
 
 // Dos pasos
 export * from "./components/CopyButton";
+export * from "./components/Code";
 export * from "./components/QrCode";
 export * from "./components/BackupCodes";
 

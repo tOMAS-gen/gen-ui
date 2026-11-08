@@ -87,16 +87,18 @@ export function ButtonLink({
 export type IconButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {
   /** Nombre accesible obligatorio: el botón no tiene texto visible. */
   label: string;
+  /** `sm` (28px) para acompañar texto en línea; el área táctil sigue en 44px. */
+  size?: "md" | "sm";
   children: ReactNode;
 };
 
 /** Botón de ícono 36px con área táctil de 44px. */
 export const IconButton = forwardRef<HTMLButtonElement, IconButtonProps>(function IconButton(
-  { label, className, children, type = "button", ...props },
+  { label, size = "md", className, children, type = "button", ...props },
   ref,
 ) {
   return (
-    <button ref={ref} type={type} className={cx("icon-btn", className)} aria-label={label} title={label} {...props}>
+    <button ref={ref} type={type} className={cx("icon-btn", size === "sm" && "icon-btn-sm", className)} aria-label={label} title={label} {...props}>
       {children}
     </button>
   );

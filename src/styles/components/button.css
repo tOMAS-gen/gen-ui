@@ -114,6 +114,11 @@
   height: 44px;
   transform: translate(-50%, -50%);
 }
+.icon-btn-sm {
+  width: 28px;
+  height: 28px;
+  border-radius: var(--radius-control);
+}
 .icon-btn:hover {
   background: var(--hover-soft);
   color: var(--text);
