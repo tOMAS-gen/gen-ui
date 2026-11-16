@@ -238,7 +238,9 @@ Cada pantalla se puede compartir por URL, por ejemplo:
 - `newTab` pone `target="_blank"` y `rel="noopener noreferrer"` en el `Link` del provider (el del router del producto
   los recibe tal cual), suma al final de la fila el ícono `ExternalLink` (16 px, color tenue) y agrega «(se abre en
   otra pestaña)» al nombre accesible, también en el menú contraído. El texto sale de `labels.opensInNewTab`.
-- `active` sigue funcionando igual: si la pantalla actual es la del destino, la fila se marca.
+- Con el menú contraído el ícono no se ve: el tooltip dice «›genstock (se abre en otra pestaña)».
+- `active` sigue funcionando igual: si la pantalla actual es la del destino, la fila se marca (el ícono externo toma
+  el color de la fila activa).
 
 Origen del CSS: `scripts/extract-genwork-css.py` registra qué rangos de `genwork/src/app/globals.css` se
 extrajeron para la v0.1.0.

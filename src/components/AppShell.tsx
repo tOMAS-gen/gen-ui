@@ -384,6 +384,8 @@ export function NavItem({
   const mini = useDrawerMini();
   const close = useCloseMobileDrawer();
   const tab = newTab ? { target: "_blank", rel: "noopener noreferrer" } : {};
+  // Contraído no se ve el ícono externo: el tooltip (y el nombre accesible) lo dicen.
+  const railLabel = newTab ? `${label} (${labels.opensInNewTab})` : label;
   if (mini) {
     return (
       <Link
@@ -392,8 +394,8 @@ export function NavItem({
         onClick={close}
         className={cx("rail-link", active && "nav-active")}
         aria-current={active ? "page" : undefined}
-        aria-label={newTab ? `${label} (${labels.opensInNewTab})` : label}
-        data-tooltip={label}
+        aria-label={railLabel}
+        data-tooltip={railLabel}
       >
         <Icon size={20} />
       </Link>

@@ -537,6 +537,9 @@
   flex-shrink: 0;
   color: var(--muted);
 }
+.sidebar a.nav.nav-active > svg.nav-external {
+  color: inherit;
+}
 .nav-section {
   display: grid;
   gap: var(--nav-gap);

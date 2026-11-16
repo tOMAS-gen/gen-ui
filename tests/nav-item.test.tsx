@@ -79,7 +79,8 @@ describe("NavItem", () => {
     expect(externo.classList.contains("rail-link")).toBe(true);
     expect(externo.getAttribute("target")).toBe("_blank");
     expect(externo.getAttribute("rel")).toBe("noopener noreferrer");
-    expect(externo.getAttribute("data-tooltip")).toBe("›genstock");
+    expect(externo.getAttribute("data-tooltip")).toBe("›genstock (se abre en otra pestaña)");
+    expect(screen.getByRole("link", { name: "menuweb" }).getAttribute("data-tooltip")).toBe("menuweb");
     const interno = screen.getByRole("link", { name: "menuweb" });
     expect(interno.classList.contains("rail-link")).toBe(true);
     expect(interno.getAttribute("target")).toBeNull();
