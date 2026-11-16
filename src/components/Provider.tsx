@@ -32,6 +32,8 @@ export type GenUILabels = {
   nextPage: string;
   noResults: string;
   loading: string;
+  /** Se agrega al nombre accesible de un link que se abre en otra pestaña. */
+  opensInNewTab: string;
 };
 
 export const DEFAULT_LABELS: GenUILabels = {
@@ -60,6 +62,7 @@ export const DEFAULT_LABELS: GenUILabels = {
   nextPage: "Página siguiente",
   noResults: "Sin resultados",
   loading: "Cargando…",
+  opensInNewTab: "se abre en otra pestaña",
 };
 
 const DefaultLink: LinkComponent = (props) => <a {...props} />;

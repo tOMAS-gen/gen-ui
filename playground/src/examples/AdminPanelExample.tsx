@@ -99,6 +99,8 @@ export function AdminPanelExample() {
             href={href}
             onClick={(e) => {
               onClick?.(e);
+              // Un NavItem con `newTab` sale del ejemplo: lo abre el navegador en otra pestaña.
+              if (props.target === "_blank") return;
               e.preventDefault();
               navigate(href.slice(1));
             }}
@@ -147,6 +149,14 @@ export function AdminPanelExample() {
                   </NavSection>
                 ),
               )}
+              <NavSection title="Enlaces">
+                <NavItem
+                  href="https://github.com/tOMAS-gen/gen-ui"
+                  icon={Globe}
+                  label="Repositorio de gen UI"
+                  newTab
+                />
+              </NavSection>
             </SidebarNav>
           }
         >
