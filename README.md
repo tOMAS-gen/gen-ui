@@ -228,5 +228,17 @@ Cada pantalla se puede compartir por URL, por ejemplo:
 - `CodeBlock` es una región con nombre (`label`, o «Código») y con foco, para scrollear con el teclado.
 - Helper: `shortenMiddle(valor, max)`. `IconButton` suma `size="sm"` (28 px, con el área táctil de 44 px).
 
+### Link del menú a otra pestaña (0.7.0)
+
+```tsx
+// Un apartado con su propia estructura (otro AppShell) se abre aparte, sin perder el panel de origen.
+<NavItem href="/genstock" icon={Boxes} label="›genstock" newTab />
+```
+
+- `newTab` pone `target="_blank"` y `rel="noopener noreferrer"` en el `Link` del provider (el del router del producto
+  los recibe tal cual), suma al final de la fila el ícono `ExternalLink` (16 px, color tenue) y agrega «(se abre en
+  otra pestaña)» al nombre accesible, también en el menú contraído. El texto sale de `labels.opensInNewTab`.
+- `active` sigue funcionando igual: si la pantalla actual es la del destino, la fila se marca.
+
 Origen del CSS: `scripts/extract-genwork-css.py` registra qué rangos de `genwork/src/app/globals.css` se
 extrajeron para la v0.1.0.

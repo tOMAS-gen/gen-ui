@@ -16,8 +16,8 @@ import { createPortal } from "react-dom";
 import { cx } from "../lib/cx";
 import { Avatar } from "./Alert";
 import { BrandLogo } from "./BrandLogo";
-import { ChevronRight, LogOut, Menu, PanelLeft, PanelLeftClose, X, type IconProps } from "./icons";
-import { useGenUI } from "./Provider";
+import { ChevronRight, ExternalLink, LogOut, Menu, PanelLeft, PanelLeftClose, X, type IconProps } from "./icons";
+import { useGenUI, useLabels } from "./Provider";
 import { ThemeToggle } from "./Theme";
 
 const MIN_W = 240;
@@ -359,31 +359,40 @@ export function NavSection({ title, children }: { title?: string; children: Reac
   );
 }
 
-/** Link del menú: fila con ícono (expandido) o ícono con tooltip (rail). */
+/**
+ * Link del menú: fila con ícono (expandido) o ícono con tooltip (rail). Con `newTab` se abre en otra pestaña
+ * (`target="_blank"` y `rel="noopener noreferrer"`), muestra el ícono de enlace externo y lo dice en el nombre accesible.
+ */
 export function NavItem({
   href,
   icon: Icon,
   label,
   active,
   badge,
+  newTab,
 }: {
   href: string;
   icon: ComponentType<IconProps>;
   label: string;
   active?: boolean;
   badge?: ReactNode;
+  /** Abre el destino en otra pestaña (por ejemplo, otro apartado con su propia estructura). */
+  newTab?: boolean;
 }) {
   const { Link } = useGenUI();
+  const labels = useLabels();
   const mini = useDrawerMini();
   const close = useCloseMobileDrawer();
+  const tab = newTab ? { target: "_blank", rel: "noopener noreferrer" } : {};
   if (mini) {
     return (
       <Link
         href={href}
+        {...tab}
         onClick={close}
         className={cx("rail-link", active && "nav-active")}
         aria-current={active ? "page" : undefined}
-        aria-label={label}
+        aria-label={newTab ? `${label} (${labels.opensInNewTab})` : label}
         data-tooltip={label}
       >
         <Icon size={20} />
@@ -391,10 +400,16 @@ export function NavItem({
     );
   }
   return (
-    <Link href={href} onClick={close} className={cx("nav", active && "nav-active")} aria-current={active ? "page" : undefined}>
+    <Link href={href} {...tab} onClick={close} className={cx("nav", active && "nav-active")} aria-current={active ? "page" : undefined}>
       <Icon size={20} />
       <span className="nav-label">{label}</span>
       {badge}
+      {newTab && (
+        <>
+          <ExternalLink size={16} className="nav-external" />
+          <span className="visually-hidden"> ({labels.opensInNewTab})</span>
+        </>
+      )}
     </Link>
   );
 }
